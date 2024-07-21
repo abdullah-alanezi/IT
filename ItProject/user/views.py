@@ -17,3 +17,10 @@ def login_view(request:HttpRequest):
         
 
     return render(request,"user/login.html")
+
+
+def logout_view(request:HttpRequest):
+    
+    if request.user.is_authenticated:
+        logout(request)
+        return redirect("user:login_view")
