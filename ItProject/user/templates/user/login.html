@@ -6,7 +6,8 @@
     <div class="row border shadow bg-white rounded p-4">
         <div class="col-12">
             <h1 class="text-center">تسجيل الدخول</h1>
-            <form>
+            <form action="{% url 'user:login_view'%}" method="post">
+                {% csrf_token %} 
                 <div class="mb-3">
                     <label for="username" class="form-label">اسم المستخدم</label>
                     <input type="text" class="form-control" id="username" name="username">
