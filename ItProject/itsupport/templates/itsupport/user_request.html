@@ -21,7 +21,7 @@
             {% for user_request in users_requests %}
             <tr>
                 
-                <td>{{user_request.user.first_name}}</td>
+                <td>{{user_request.user.first_name}} {{user_request.user.last_name}}</td>
                 <td>{{ user_request.device_type }}</td>
                 <td>{{user_request.problem_description}}</td>
                 <td>{{user_request.device_id}}</td>

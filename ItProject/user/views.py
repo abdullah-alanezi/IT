@@ -6,15 +6,18 @@ from django.contrib.auth import authenticate,login, logout
 
 
 def login_view(request:HttpRequest):
+    if request.user.is_authenticated:
+        return redirect('main:home_view')
+    else:
+            if request.method =="POST":
 
-    if request.method =="POST":
+                user = authenticate(username = request.POST["username"],password=request.POST["password"])
 
-        user = authenticate(username = request.POST["username"],password=request.POST["password"])
+                if user:
+                    login(request,user)
+                    return redirect('main:home_view')
 
-        if user:
-            login(request,user)
-            return redirect('main:home_view')
-        
+       
 
     return render(request,"user/login.html")
 
@@ -23,4 +26,5 @@ def logout_view(request:HttpRequest):
     
     if request.user.is_authenticated:
         logout(request)
+        
         return redirect("user:login_view")

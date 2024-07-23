@@ -6,5 +6,6 @@ app_name ="itsupport"
 urlpatterns =[
     path("support/request/",views.support_request, name="support_request"),
     path("user/request/",views.user_request_view,name="user_request_view"),
-    path("my/order/",views.my_order,name="my_order")
+    path("my/order/",views.my_order,name="my_order"),
+    path("add/prenter/request",views.add_printer_request,name="add_printer_request")
 ]
