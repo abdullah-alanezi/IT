@@ -14,33 +14,25 @@
                 <th scope="col">معرف الجهاز</th>
                 <th scope="col">تاريخ إنشاء الطلب</th>
                 <th scope="col">تفاصيل</th>
+                <th scope="col">الحالة</th>
             </tr>
         </thead>
         <tbody>
+            {% for user_request in users_requests %}
             <tr>
-                <td>محمد علي</td>
-                <td>حاسوب محمول</td>
-                <td>الجهاز لا يعمل</td>
-                <td>123456</td>
-                <td>2024-07-22</td>
+                
+                <td>{{user_request.user.first_name}}</td>
+                <td>{{ user_request.device_type }}</td>
+                <td>{{user_request.problem_description}}</td>
+                <td>{{user_request.device_id}}</td>
+                <td>{{ user_request.request_date }}</td>
                 <td><button class="btn btn-success btn-sm" aria-label="عرض تفاصيل المشكلة لمحمد علي">عرض التفاصيل</button></td>
+                <td>{{ user_request.status }}</td>
+            
             </tr>
-            <tr>
-                <td>أحمد عبد الله</td>
-                <td>حاسوب مكتبي</td>
-                <td>الشاشة لا تعرض</td>
-                <td>654321</td>
-                <td>2024-07-21</td>
-                <td><button class="btn btn-success btn-sm" aria-label="عرض تفاصيل المشكلة لأحمد عبد الله">عرض التفاصيل</button></td>
-            </tr>
-            <tr>
-                <td>سارة يوسف</td>
-                <td>طابعة</td>
-                <td>الطابعة لا تطبع</td>
-                <td>112233</td>
-                <td>2024-07-20</td>
-                <td><button class="btn btn-success btn-sm" aria-label="عرض تفاصيل المشكلة لسارة يوسف">عرض التفاصيل</button></td>
-            </tr>
+            {% endfor %}
+
+
         </tbody>
     </table>
 </div>
