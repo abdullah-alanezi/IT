@@ -4,5 +4,6 @@ app_name ="itsupport"
 
 
 urlpatterns =[
-    path("support_request/",views.support_request, name="support_request"),
+    path("support/request/",views.support_request, name="support_request"),
+    path("user/request/",views.user_request_view,name="user_request_view"),
 ]

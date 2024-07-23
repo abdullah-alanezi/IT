@@ -1,0 +1,47 @@
+{% extends "main/base.html" %}
+
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4 text-center">طلبات الدعم الفني</h2>
+    <table class="table table-bordered table-striped table-hover">
+        <thead class="bg-dark text-white">
+            <tr>
+                <th scope="col">اسم المستخدم</th>
+                <th scope="col">نوع الجهاز</th>
+                <th scope="col">وصف المشكلة</th>
+                <th scope="col">معرف الجهاز</th>
+                <th scope="col">تاريخ إنشاء الطلب</th>
+                <th scope="col">تفاصيل</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>محمد علي</td>
+                <td>حاسوب محمول</td>
+                <td>الجهاز لا يعمل</td>
+                <td>123456</td>
+                <td>2024-07-22</td>
+                <td><button class="btn btn-success btn-sm" aria-label="عرض تفاصيل المشكلة لمحمد علي">عرض التفاصيل</button></td>
+            </tr>
+            <tr>
+                <td>أحمد عبد الله</td>
+                <td>حاسوب مكتبي</td>
+                <td>الشاشة لا تعرض</td>
+                <td>654321</td>
+                <td>2024-07-21</td>
+                <td><button class="btn btn-success btn-sm" aria-label="عرض تفاصيل المشكلة لأحمد عبد الله">عرض التفاصيل</button></td>
+            </tr>
+            <tr>
+                <td>سارة يوسف</td>
+                <td>طابعة</td>
+                <td>الطابعة لا تطبع</td>
+                <td>112233</td>
+                <td>2024-07-20</td>
+                <td><button class="btn btn-success btn-sm" aria-label="عرض تفاصيل المشكلة لسارة يوسف">عرض التفاصيل</button></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+{% endblock %}
