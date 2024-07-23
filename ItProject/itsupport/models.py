@@ -6,10 +6,10 @@ class MaintenanceRequest(models.Model):
 
     
     STATUS_CHOICES = [
-        ('sendit', 'تم إرسال الطلب'),
-        ('pending', 'تحت الإجراء'),
+        ('تم إرسال الطلب','sendit' ),
+        ( 'تحت الإجراء','pending'),
         
-        ('completed', 'منفذ'),
+        ('منفذ','completed'),
     ]
     
     user = models.ForeignKey(User, on_delete=models.CASCADE)
