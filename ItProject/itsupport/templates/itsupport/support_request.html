@@ -1,11 +1,126 @@
-{% extends "main/base.html"%}
+{% extends "main/base.html" %}
 
 {% load static %}
 
+{% block content %}
 
+<!-- Button trigger modal -->
+<div class="container mt-5">
+  <div class="row d-flex justify-content-center ">
+    <div class="col-6">
+      <button type="button" class="btn shadow bg-light  h-100" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        <div class ="p-3"> <img src="{% static 'images/maint2.png' %}" class="img-fluid mb-4 border" width="150" height="100" alt="..."></div>
+        الصيانة
+      </button>
+    </div>
 
-{%block content%}
+    <div class="col-6">
+      <button type="button" class="btn shadow bg-light  h-100" data-bs-toggle="modal" data-bs-target="#printerModal">
+        <div class ="p-3"> <img src="{% static 'images/maint3.png' %}" class="img-fluid mb-4 border" width="150" height="100" alt="..."></div>
+        أحبار
+      </button>
+    </div>
+  </div>
+  
+  <!-- Modal: تقرير الصيانة -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">تقرير الصيانة</h1>
+      
+        </div>
 
+        <form method="post" enctype="multipart/form-data">
+          {% csrf_token %}
 
+          <div class="modal-body">
+            <!-- نوع الجهاز -->
+            <div class="mb-3">
+              <label for="device_type" class="form-label">أختر نوع الجهاز</label>
+              <select class="form-select" id="device_type" name="device_type" required>
+             
+                <option value="desktop">كمبيوتر مكتبي</option>
+                <option value="laptop">لابتوب</option>
+                <option value="scanner">سكانر</option>
+                <option value="printer">طابعة</option>
+              </select>
+            </div>
+
+            <!-- رقم الجهاز -->
+            <div class="mb-3">
+              <label for="device_id" class="form-label">رقم الجهاز</label>
+              <input type="text" class="form-control" id="device_id" name="device_id" required>
+            </div>
+            
+            <!-- وصف المشكلة -->
+            <div class="mb-3">
+              <label for="problem_description" class="form-label">وصف المشكلة</label>
+              <textarea class="form-control" id="problem_description" name="problem_description" rows="3" required></textarea>
+            </div>
+            
+            <!-- المرفقات -->
+            <div class="mb-3">
+              <label for="image" class="form-label">المرفقات</label>
+              <input type="file" class="form-control" id="image" name="image" required>
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">أغلاق</button>
+            <button type="submit" class="btn btn-primary">إرسال</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: تقرير حبر -->
+  <div class="modal fade" id="printerModal" tabindex="-1" aria-labelledby="printerModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="printerModalLabel">طلب حبر </h1>
+     
+        </div>
+
+        <form method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+
+          <div class="modal-body">
+            <!-- نوع الطابعة -->
+            <div class="mb-3">
+              <label for="printer_type" class="form-label">نوع الطابعة</label>
+              <input type="text" class="form-control" id="printer_type" name="printer_type" required>
+            </div>
+
+            <!-- رقم الطابعة -->
+            <div class="mb-3">
+              <label for="printer_id" class="form-label">رقم الطابعة</label>
+              <input type="text" class="form-control" id="printer_id" name="printer_id" required>
+            </div>
+
+            <!-- رقم الحبر -->
+            <div class="mb-3">
+              <label for="ink_id" class="form-label">رقم الحبر</label>
+              <input type="text" class="form-control" id="ink_id" name="ink_id" required>
+            </div>
+            
+            <!-- المرفقات -->
+            <div class="mb-3">
+              <label for="image" class="form-label">المرفقات</label>
+              <input type="file" class="form-control" id="image" name="image" required>
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">أغلاق</button>
+            <button type="submit" class="btn btn-primary">إرسال</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 
 {% endblock %}
