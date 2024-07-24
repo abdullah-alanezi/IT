@@ -19,6 +19,16 @@
                     <label for="password" class="form-label">كلمة المرور</label>
                     <input type="password" class="form-control" id="password" name="password" required>
                 </div>
+                {% if msg %}
+                
+                    <div class="alert alert-danger d-flex align-items-center" role="alert">
+                        
+                        
+                          {{msg}}
+                        
+                      </div>
+                
+                {% endif %}
 
                 <button type="submit" class="btn btn-success w-100">إرسال</button>
             </form>

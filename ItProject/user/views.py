@@ -6,6 +6,7 @@ from django.contrib.auth import authenticate,login, logout
 
 
 def login_view(request:HttpRequest):
+    msg =None
     if request.user.is_authenticated:
         return redirect('main:home_view')
     else:
@@ -16,10 +17,12 @@ def login_view(request:HttpRequest):
                 if user:
                     login(request,user)
                     return redirect('main:home_view')
+                else:
+                     msg = "اسم المستخدم أو كلمة المرور خاطئة"
 
        
 
-    return render(request,"user/login.html")
+    return render(request,"user/login.html",{"msg":msg})
 
 
 def logout_view(request:HttpRequest):

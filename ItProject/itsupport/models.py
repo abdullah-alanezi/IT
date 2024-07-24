@@ -48,4 +48,12 @@ class PrinterRequest(models.Model):
     
     def __str__(self):
         return f'{self.printer_type} - {self.printer_id} ({self.user.username})'
+    
+
+
+class ItHelp(models.Model):
+
+    it_employee = models.ForeignKey(User,on_delete=models.CASCADE)
+    
+    user_request = models.ForeignKey(MaintenanceRequest,on_delete=models.CASCADE)
 
