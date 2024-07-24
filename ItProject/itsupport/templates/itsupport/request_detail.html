@@ -1,0 +1,60 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}{% endblock %}
+
+{% block content %}
+
+
+<div class="container">
+
+<div class="row">
+    <h2 class="mb-4 border border-1 border-success-subtle shadow p-3 bg-light w-25 rounded text-center">الطلبات</h2>
+</div>
+
+<div class="row border border-1 border-success-subtle shadow-lg p-3 bg-light rounded">
+
+    <div class="col-6">
+        <div class="label mb-4">الاسم: ffff</div> 
+
+        <div class="label mb-4">البريد الإلكتروني: ghjghf@hdds</div> 
+
+        <div class="label"> حالة الطلب </div>
+
+        <div class="value"><span class="status">تم معالجة الطلب</span></div>
+        
+       
+    </div>
+    
+    <div class="col-6">
+        <div class="label  mb-4"> نوع الجهاز:3535</div>
+
+        <div class="label  mb-4">رقم الجهاز:3213 </div>
+
+        <div class="label  mb-4">نوع الطابعة:ht12 </div>
+
+        <div class="label  mb-4"> رقم الطابعة:2314 </div>
+
+        <div class="label  mb-4">رقم الحبر:1452 </div>
+ 
+
+
+        
+    </div>
+
+</div>
+
+<div class="row mt-5 border border-1 border-success-subtle shadow-lg p-3 bg-light rounded">
+    <div class="label">وصف المشكلة</div>
+    <div class="value">ارجو قبولي في برنامج تمهير لي استطيع الحصول على فرص وظيفية</div>
+</div>
+<div class="row mt-5"></div>
+<div class="image-container"></div> 
+    
+    <img src="{% static 'images/logo.jpeg' %}" alt="صورة المستخدم"></div>
+
+</div>
+
+
+
+{% endblock %}
