@@ -1,0 +1,66 @@
+.badge-status {
+    border-radius: 5px;
+    padding: 5px 10px;
+    margin-left: 5px;
+}
+.badge-open {
+    background-color: #d4edda;
+    color: #155724;
+}
+.badge-in-progress {
+    background-color: #fff3cd;
+    color: #856404;
+}
+.badge-closed {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+.table th, .table td {
+    vertical-align: middle;
+}
+.pagination {
+    justify-content: center;
+}
+.request-card {
+    border: 1px solid #e1e1e1;
+    border-radius: 8px;
+    padding: 20px;
+    background-color: #fff;
+    margin-bottom: 20px;
+}
+.request-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.request-details {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+.status-section {
+    text-align: center;
+}
+.status-icon {
+    font-size: 50px;
+}
+.response-section {
+    margin-top: 20px;
+    border-top: 1px solid #e1e1e1;
+    padding-top: 20px;
+}
+.response {
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #f8f9fa;
+    border-radius: 5px;
+}
+.response-time {
+    font-size: 12px;
+    color: #6c757d;
+}
+.request-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+}

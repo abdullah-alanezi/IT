@@ -35,8 +35,20 @@ def user_request_view(request:HttpRequest):
 
 
 def my_order(request:HttpRequest):
+    # class_name=None
+    my_order = MaintenanceRequest.objects.filter(user=request.user)
+    
+    # for order in my_order:
 
-    return render(request,"itsupport/my_order.html")
+    #     if order.status == "منتهي":
+    #         class_name="badge badge-status badge-closed"
+            
+    #     elif order.status =="تحت الإجراء":
+    #         class_name="badge badge-status badge-in-progress"
+    #     elif order.status =="مفتوح":
+    #         class_name="badge badge-status badge-open"
+
+    return render(request,"itsupport/my_order.html",{"my_order":my_order})
 
 
 

@@ -4,6 +4,6 @@ app_name = "main"
 
 
 urlpatterns =[
-    path("home/",views.home_view,name="home_view"),
+    path("",views.home_view,name="home_view"),
 
 ]
