@@ -7,73 +7,6 @@
 {% block content %}
 
 
-<style>
-    .badge-status {
-        background-color: #d4edda;
-        color: #155724;
-    }
-    .table th, .table td {
-        vertical-align: middle;
-    }
-    .pagination {
-        justify-content: center;
-    }
-    .request-card {
-        border: 1px solid #e1e1e1;
-        border-radius: 8px;
-        padding: 20px;
-        background-color: #fff;
-        margin-bottom: 20px;
-    }
-    .request-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-    .request-details {
-        margin-top: 20px;
-        display: flex;
-        justify-content: space-between;
-    }
-    .status-section {
-        text-align: center;
-    }
-    .status-badge {
-        background-color: #d4edda;
-        color: #155724;
-        border-radius: 5px;
-        padding: 5px 10px;
-        margin-top: 10px;
-    }
-    .status-icon {
-        font-size: 50px;
-        color: #28a745;
-    }
-    .response-section {
-        margin-top: 20px;
-        border-top: 1px solid #e1e1e1;
-        padding-top: 20px;
-    }
-    .response {
-        margin-bottom: 10px;
-        padding: 10px;
-        background-color: #f8f9fa;
-        border-radius: 5px;
-    }
-    .response-time {
-        font-size: 12px;
-        color: #6c757d;
-    }
-    .request-image {
-        max-width: 100%;
-        height: auto;
-        border-radius: 5px;
-    }
-</style>
-<title>طلباتي</title>
-</head>
-<body>
-
 <div class="container my-4">
 <h4 class="text-right">طلباتي</h4>
 <p class="text-right">عرض جميع طلباتي ومتابعة حالة الطلب</p>
@@ -83,30 +16,58 @@
     <input type="search" class="form-control form-control-sm d-inline-block" style="width: auto;" placeholder="بحث...">
 </div>
 
-<div class="table-responsive">
-    <table class="table table-striped table-bordered text-center">
-        <thead>
-            <tr>
-                <th>م</th>
-                <th>الاسم</th>
-                <th>الجوال</th>
-                <th>النوع</th>
-                <th>الحالة</th>
-                <th>عرض</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>123</td>
-                <td>خالد فريح</td>
-                <td>05566</td>
-                <td> صيانة</td>
-                <td>تحت الإجراء<span class="badge badge-status"></span></td>
-                <td><button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#detailsModal">التفاصيل</button></td>
-            </tr>
-        </tbody>
-    </table>
-</div>
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered text-center">
+            <thead>
+                <tr>
+                    <th>م</th>
+                    <th>النوع</th>
+                    <th>الحالة</th>
+                    <th>عرض</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-status="مفتوح" data-request-type="صيانة" data-request-date="17-07-2024 10:33:55" data-details="تجربة" data-employee-name="محمد أحمد" data-employee-phone="1234567890">
+                    <td>123</td>
+                    <td>صيانة</td>
+                    <td><span class="badge badge-status badge-open">مفتوح</span></td>
+                    <td><button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#detailsModal">التفاصيل</button></td>
+                </tr>
+                {% for order in my_order %}
+                {% if order.status == "منتهي" %}
+                <tr data-status="{{order.status}}" data-request-type="تركيب" data-request-date="17-07-2024 11:00:00" data-details="تركيب جهاز" data-employee-name="سعيد علي" data-employee-phone="0987654321">
+                    <td>{{order.id}}</td>
+                    <td>{{order.problem_description}}</td>
+                    
+                    <td><span class="badge badge-status badge-closed">{{order.status}}</span></td>
+                    
+                    <td><button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#detailsModal">التفاصيل</button></td>
+                </tr>
+                {% elif order.status == "تحت الإجراء" %}
+                <tr data-status="{{order.status}}" data-request-type="تركيب" data-request-date="17-07-2024 11:00:00" data-details="تركيب جهاز" data-employee-name="سعيد علي" data-employee-phone="0987654321">
+                    <td>{{order.id}}</td>
+                    <td>{{order.problem_description}}</td>
+                    
+                    <td><span class="badge badge-status badge-in-progress">{{order.status}}</span></td>
+                    
+                    <td><button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#detailsModal">التفاصيل</button></td>
+                </tr>
+                {% elif order.status == "مفتوح" %}
+                <tr data-status="{{order.status}}" data-request-type="تركيب" data-request-date="17-07-2024 11:00:00" data-details="تركيب جهاز" data-employee-name="سعيد علي" data-employee-phone="0987654321">
+                    <td>{{order.id}}</td>
+                    <td>{{order.problem_description}}</td>
+                    
+                    <td><span class="badge badge-status badge-open">{{order.status}}</span></td>
+                    
+                    <td><button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#detailsModal">التفاصيل</button></td>
+                </tr>
+                {% endif %}
+                
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+>>>>>>> 3850de4bb4add104080ae910fe811a503e8e5690
 </div>
 
 <!-- Modal -->
@@ -159,6 +120,7 @@
         </div>
     </div>
 </div>
+
 </div>
 
 

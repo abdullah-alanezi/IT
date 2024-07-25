@@ -48,6 +48,7 @@
                         </thead>
                         <tbody>
                             {% for user_request in users_requests %}
+                            {% if user_request.status == "مفتوح" %}
                             <tr>
                                 <td>{{user_request.user.first_name}} {{user_request.user.last_name}}</td>
                                 <td>{{ user_request.device_type }}</td>
@@ -57,8 +58,33 @@
                                 <td>
                                     <a href="{% url 'itsupport:request_detail_view' user_request.id %}" class="btn btn-success btn-sm">عرض التفاصيل</a>
                                 </td>
-                                <td>{{ user_request.status }}</td>
+                                <td ><span class="badge badge-status badge-open"> {{ user_request.status }}</span></td>
                             </tr>
+                            {% elif user_request.status == "تحت الإجراء" %}
+                            <tr>
+                                <td>{{user_request.user.first_name}} {{user_request.user.last_name}}</td>
+                                <td>{{ user_request.device_type }}</td>
+                                <td>{{user_request.problem_description}}</td>
+                                <td>{{user_request.device_id}}</td>
+                                <td>{{ user_request.request_date }}</td>
+                                <td>
+                                    <a href="{% url 'itsupport:request_detail_view' user_request.id %}" class="btn btn-success btn-sm">عرض التفاصيل</a>
+                                </td>
+                                <td ><span class="badge badge-status badge-in-progress"> {{ user_request.status }}</span></td>
+                            </tr>
+                            {% elif user_request.status == "منتهي" %}
+                            <tr>
+                                <td>{{user_request.user.first_name}} {{user_request.user.last_name}}</td>
+                                <td>{{ user_request.device_type }}</td>
+                                <td>{{user_request.problem_description}}</td>
+                                <td>{{user_request.device_id}}</td>
+                                <td>{{ user_request.request_date }}</td>
+                                <td>
+                                    <a href="{% url 'itsupport:request_detail_view' user_request.id %}" class="btn btn-success btn-sm">عرض التفاصيل</a>
+                                </td>
+                                <td ><span class="badge badge-status badge-closed"> {{ user_request.status }}</span></td>
+                            </tr>
+                            {% endif %}
                             {% endfor %}
                         </tbody>
                     </table>
