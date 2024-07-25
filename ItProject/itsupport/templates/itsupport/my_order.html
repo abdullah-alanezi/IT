@@ -6,4 +6,283 @@
 
 {% block content %}
 
+
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <title>طلباتي</title>
+    <style>
+        .badge-status {
+            border-radius: 5px;
+            padding: 5px 10px;
+            margin-left: 5px;
+        }
+        .badge-open {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .badge-in-progress {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+        .badge-closed {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        .table th, .table td {
+            vertical-align: middle;
+        }
+        .pagination {
+            justify-content: center;
+        }
+        .request-card {
+            border: 1px solid #e1e1e1;
+            border-radius: 8px;
+            padding: 20px;
+            background-color: #fff;
+            margin-bottom: 20px;
+        }
+        .request-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .request-details {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .status-section {
+            text-align: center;
+        }
+        .status-icon {
+            font-size: 50px;
+        }
+        .response-section {
+            margin-top: 20px;
+            border-top: 1px solid #e1e1e1;
+            padding-top: 20px;
+        }
+        .response {
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+        .response-time {
+            font-size: 12px;
+            color: #6c757d;
+        }
+        .request-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container my-4">
+    <h4 class="text-right">طلباتي</h4>
+    <p class="text-right">عرض جميع طلباتي ومتابعة حالة الطلب</p>
+
+    <div class="mb-3 text-right">
+        <label>ابحث:</label>
+        <input type="search" class="form-control form-control-sm d-inline-block" style="width: auto;" placeholder="بحث...">
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered text-center">
+            <thead>
+                <tr>
+                    <th>م</th>
+                    <th>النوع</th>
+                    <th>الحالة</th>
+                    <th>عرض</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-status="مفتوح" data-request-type="صيانة" data-request-date="17-07-2024 10:33:55" data-details="تجربة" data-employee-name="محمد أحمد" data-employee-phone="1234567890">
+                    <td>123</td>
+                    <td>صيانة</td>
+                    <td><span class="badge badge-status badge-open">مفتوح</span></td>
+                    <td><button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#detailsModal">التفاصيل</button></td>
+                </tr>
+                <tr data-status="تحت الإجراء" data-request-type="تركيب" data-request-date="17-07-2024 11:00:00" data-details="تركيب جهاز" data-employee-name="سعيد علي" data-employee-phone="0987654321">
+                    <td>124</td>
+                    <td>تركيب</td>
+                    <td><span class="badge badge-status badge-in-progress">تحت الإجراء</span></td>
+                    <td><button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#detailsModal">التفاصيل</button></td>
+                </tr>
+                <tr data-status="منتهي" data-request-type="إصلاح" data-request-date="17-07-2024 11:30:00" data-details="إصلاح عطل" data-employee-name="أحمد حسن" data-employee-phone="1122334455">
+                    <td>125</td>
+                    <td>إصلاح</td>
+                    <td><span class="badge badge-status badge-closed">منتهي</span></td>
+                    <td><button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#detailsModal">التفاصيل</button></td>
+                </tr>
+                <tr data-status="مفتوح" data-request-type="استفسار" data-request-date="17-07-2024 12:00:00" data-details="استفسار عن خدمة" data-employee-name="فاطمة يوسف" data-employee-phone="2233445566">
+                    <td>126</td>
+                    <td>استفسار</td>
+                    <td><span class="badge badge-status badge-open">مفتوح</span></td>
+                    <td><button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#detailsModal">التفاصيل</button></td>
+                </tr>
+                <tr data-status="تحت الإجراء" data-request-type="طلب" data-request-date="17-07-2024 12:30:00" data-details="طلب خدمة جديدة" data-employee-name="أمجد قاسم" data-employee-phone="3344556677">
+                    <td>127</td>
+                    <td>طلب</td>
+                    <td><span class="badge badge-status badge-in-progress">تحت الإجراء</span></td>
+                    <td><button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#detailsModal">التفاصيل</button></td>
+                </tr>
+                <tr data-status="منتهي" data-request-type="استشارة" data-request-date="17-07-2024 13:00:00" data-details="استشارة فنية" data-employee-name="ليلى زكريا" data-employee-phone="4455667788">
+                    <td>128</td>
+                    <td>استشارة</td>
+                    <td><span class="badge badge-status badge-closed">منتهي</span></td>
+                    <td><button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#detailsModal">التفاصيل</button></td>
+                </tr>
+                <tr data-status="مفتوح" data-request-type="دعم فني" data-request-date="17-07-2024 13:30:00" data-details="طلب دعم فني" data-employee-name="حسن عبد الله" data-employee-phone="5566778899">
+                    <td>129</td>
+                    <td>دعم فني</td>
+                    <td><span class="badge badge-status badge-open">مفتوح</span></td>
+                    <td><button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#detailsModal">التفاصيل</button></td>
+                </tr>
+                <tr data-status="تحت الإجراء" data-request-type="صيانة" data-request-date="17-07-2024 14:00:00" data-details="تجربة" data-employee-name="نورا سامي" data-employee-phone="6677889900">
+                    <td>130</td>
+                    <td>صيانة</td>
+                    <td><span class="badge badge-status badge-in-progress">تحت الإجراء</span></td>
+                    <td><button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#detailsModal">التفاصيل</button></td>
+                </tr>
+                <tr data-status="مفتوح" data-request-type="استفسار" data-request-date="17-07-2024 14:30:00" data-details="استفسار عن سعر" data-employee-name="سارة ممدوح" data-employee-phone="7788990011">
+                    <td>131</td>
+                    <td>استفسار</td>
+                    <td><span class="badge badge-status badge-open">مفتوح</span></td>
+                    <td><button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#detailsModal">التفاصيل</button></td>
+                </tr>
+                <tr data-status="منتهي" data-request-type="تركيب" data-request-date="17-07-2024 15:00:00" data-details="تركيب نظام" data-employee-name="عادل جابر" data-employee-phone="8899001122">
+                    <td>132</td>
+                    <td>تركيب</td>
+                    <td><span class="badge badge-status badge-closed">منتهي</span></td>
+                    <td><button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#detailsModal">التفاصيل</button></td>
+                </tr>
+                <tr data-status="تحت الإجراء" data-request-type="إصلاح" data-request-date="17-07-2024 15:30:00" data-details="إصلاح جهاز" data-employee-name="زينب يوسف" data-employee-phone="9900112233">
+                    <td>133</td>
+                    <td>إصلاح</td>
+                    <td><span class="badge badge-status badge-in-progress">تحت الإجراء</span></td>
+                    <td><button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#detailsModal">التفاصيل</button></td>
+                </tr>
+                <tr data-status="مفتوح" data-request-type="استشارة" data-request-date="17-07-2024 16:00:00" data-details="استشارة تقنية" data-employee-name="محمود عطية" data-employee-phone="0011223344">
+                    <td>134</td>
+                    <td>استشارة</td>
+                    <td><span class="badge badge-status badge-open">مفتوح</span></td>
+                    <td><button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#detailsModal">التفاصيل</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="detailsModal" tabindex="-1" aria-labelledby="detailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="detailsModalLabel">تفاصيل الطلب</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="request-card">
+                    <div class="request-header">
+                        <div>
+                            <p><strong>نوع الطلب:</strong> <span id="request-type"></span></p>
+                            <p><strong>تاريخ الطلب:</strong> <span id="request-date"></span></p>
+                            <p><strong>اسم المسؤول:</strong> <span id="employee-name"></span></p>
+                            <p><strong>رقم الجوال:</strong> <span id="employee-phone"></span></p>
+                        </div>
+                    </div>
+                    
+                    <div class="request-details">
+                        <div>
+                            <p><strong>تفاصيل الطلب:</strong></p>
+                            <p id="request-details"></p>
+                            <img src="path mint.jpg" alt="تفاصيل الطلب" class="request-image">
+                        </div>
+                        <div class="status-section">
+                            <div id="request-status-badge" class="status-badge"></div>
+                            <div id="status-icon" class="status-icon"></div>
+                            <p id="status-text"></p>
+                        </div>
+                    </div>
+
+                    <div class="response-section">
+                        <div class="response">
+                            <p><strong>الرد:</strong> شكرا</p>
+                            <p class="response-time">تم الرد في: 17-07-2024 10:54:59 - 1 أسبوع مرت</p>
+                        </div>
+                        <textarea class="form-control" rows="3" placeholder="الرد على الطلب"></textarea>
+                        <button class="btn btn-primary mt-2">إرسال الرد</button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إغلاق</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.min.js"></script>
+<script>
+    document.querySelectorAll('button[data-bs-target="#detailsModal"]').forEach(button => {
+        button.addEventListener('click', () => {
+            const row = button.closest('tr');
+            const type = row.getAttribute('data-request-type');
+            const date = row.getAttribute('data-request-date');
+            const details = row.getAttribute('data-details');
+            const status = row.getAttribute('data-status');
+            const employeeName = row.getAttribute('data-employee-name');
+            const employeePhone = row.getAttribute('data-employee-phone');
+
+            document.getElementById('request-type').textContent = type;
+            document.getElementById('request-date').textContent = date;
+            document.getElementById('request-details').textContent = details;
+            document.getElementById('employee-name').textContent = employeeName;
+            document.getElementById('employee-phone').textContent = employeePhone;
+            
+            const statusBadge = document.getElementById('request-status-badge');
+            const statusIcon = document.getElementById('status-icon');
+            const statusText = document.getElementById('status-text');
+            
+            switch (status) {
+                case 'مفتوح':
+                    statusBadge.className = 'badge badge-status badge-open';
+                    statusIcon.className = 'status-icon bi bi-info-circle';
+                    statusText.textContent = 'الطلب مفتوح';
+                    break;
+                case 'تحت الإجراء':
+                    statusBadge.className = 'badge badge-status badge-in-progress';
+                    statusIcon.className = 'status-icon bi bi-hourglass-split';
+                    statusText.textContent = 'الطلب تحت الإجراء';
+                    break;
+                case 'منتهي':
+                    statusBadge.className = 'badge badge-status badge-closed';
+                    statusIcon.className = 'status-icon bi bi-check-circle';
+                    statusText.textContent = 'الطلب منتهي';
+                    break;
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+   
 {% endblock %}
