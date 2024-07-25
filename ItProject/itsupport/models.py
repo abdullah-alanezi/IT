@@ -6,17 +6,17 @@ class MaintenanceRequest(models.Model):
 
     
     STATUS_CHOICES = [
-        ('تم إرسال الطلب','sendit' ),
+        ('مفتوح','sendit' ),
         ( 'تحت الإجراء','pending'),
         
-        ('منفذ','completed'),
+        ('منتهي','completed'),
     ]
     
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     device_type = models.CharField(max_length=255)
     device_id = models.CharField(max_length=100)
     problem_description = models.TextField()
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='تم إرسال الطلب')
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='مفتوح')
     request_date = models.DateTimeField(auto_now_add=True)
     image = models.ImageField(upload_to='images/',default="images/default.jpg")
     

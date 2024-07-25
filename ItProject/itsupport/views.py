@@ -35,8 +35,20 @@ def user_request_view(request:HttpRequest):
 
 
 def my_order(request:HttpRequest):
+    # class_name=None
+    my_order = MaintenanceRequest.objects.filter(user=request.user)
+    
+    # for order in my_order:
 
-    return render(request,"itsupport/my_order.html")
+    #     if order.status == "منتهي":
+    #         class_name="badge badge-status badge-closed"
+            
+    #     elif order.status =="تحت الإجراء":
+    #         class_name="badge badge-status badge-in-progress"
+    #     elif order.status =="مفتوح":
+    #         class_name="badge badge-status badge-open"
+
+    return render(request,"itsupport/my_order.html",{"my_order":my_order})
 
 
 
@@ -56,6 +68,17 @@ def add_printer_request(request:HttpRequest):
     else:
         return redirect("user:login_view")
     
+
+
+    
+def request_detail_view(request:HttpRequest,request_id):
+
+    if not request.user.is_staff:
+        return redirect("main:home_view")
+    else:
+        request_detail = MaintenanceRequest.objects.get(id=request_id)
+
+    return render(request,"itsupport/request_detail.html",{"request_detail":request_detail})
 
 
 

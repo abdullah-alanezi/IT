@@ -1,39 +1,120 @@
 {% extends "main/base.html" %}
-
 {% load static %}
 
 {% block content %}
 <div class="container mt-5">
-    <h2 class="mb-4 text-center">طلبات الدعم الفني</h2>
-    <table class="table table-bordered table-striped table-hover">
-        <thead class="bg-dark text-white">
-            <tr>
-                <th scope="col">اسم المستخدم</th>
-                <th scope="col">نوع الجهاز</th>
-                <th scope="col">وصف المشكلة</th>
-                <th scope="col">معرف الجهاز</th>
-                <th scope="col">تاريخ إنشاء الطلب</th>
-                <th scope="col">تفاصيل</th>
-                <th scope="col">الحالة</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for user_request in users_requests %}
-            <tr>
-                
-                <td>{{user_request.user.first_name}} {{user_request.user.last_name}}</td>
-                <td>{{ user_request.device_type }}</td>
-                <td>{{user_request.problem_description}}</td>
-                <td>{{user_request.device_id}}</td>
-                <td>{{ user_request.request_date }}</td>
-                <td><button class="btn btn-success btn-sm" aria-label="عرض تفاصيل المشكلة لمحمد علي">عرض التفاصيل</button></td>
-                <td>{{ user_request.status }}</td>
-            
-            </tr>
-            {% endfor %}
+    <div class="row d-flex justify-content-center">
+        <!-- Maintenance Button -->
+        <div class="col-6">
+            <button type="button" class="btn shadow bg-light h-100" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <div class="p-3">
+                    <img src="{% static 'images/maint2.png' %}" class="img-fluid mb-4 border" width="150" height="100" alt="الصيانة">
+                </div>
+                الصيانة
+            </button>
+        </div>
+        <!-- Printer Ink Button -->
+        <div class="col-6">
+            <button type="button" class="btn shadow bg-light h-100" data-bs-toggle="modal" data-bs-target="#printerModal">
+                <div class="p-3">
+                    <img src="{% static 'images/maint3.png' %}" class="img-fluid mb-4 border" width="150" height="100" alt="أحبار">
+                </div>
+                أحبار
+            </button>
+        </div>
+    </div>
 
+    <!-- Modal: Maintenance Report -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">طلبات الدعم الفني</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h2 class="mb-4 text-center">طلبات الدعم الفني</h2>
+                    <table class="table table-bordered table-striped table-hover">
+                        <thead class="bg-dark text-white">
+                            <tr>
+                                <th scope="col">اسم المستخدم</th>
+                                <th scope="col">نوع الجهاز</th>
+                                <th scope="col">وصف المشكلة</th>
+                                <th scope="col">معرف الجهاز</th>
+                                <th scope="col">تاريخ إنشاء الطلب</th>
+                                <th scope="col">تفاصيل</th>
+                                <th scope="col">الحالة</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for user_request in users_requests %}
+                            {% if user_request.status == "مفتوح" %}
+                            <tr>
+                                <td>{{user_request.user.first_name}} {{user_request.user.last_name}}</td>
+                                <td>{{ user_request.device_type }}</td>
+                                <td>{{user_request.problem_description}}</td>
+                                <td>{{user_request.device_id}}</td>
+                                <td>{{ user_request.request_date }}</td>
+                                <td>
+                                    <a href="{% url 'itsupport:request_detail_view' user_request.id %}" class="btn btn-success btn-sm">عرض التفاصيل</a>
+                                </td>
+                                <td ><span class="badge badge-status badge-open"> {{ user_request.status }}</span></td>
+                            </tr>
+                            {% elif user_request.status == "تحت الإجراء" %}
+                            <tr>
+                                <td>{{user_request.user.first_name}} {{user_request.user.last_name}}</td>
+                                <td>{{ user_request.device_type }}</td>
+                                <td>{{user_request.problem_description}}</td>
+                                <td>{{user_request.device_id}}</td>
+                                <td>{{ user_request.request_date }}</td>
+                                <td>
+                                    <a href="{% url 'itsupport:request_detail_view' user_request.id %}" class="btn btn-success btn-sm">عرض التفاصيل</a>
+                                </td>
+                                <td ><span class="badge badge-status badge-in-progress"> {{ user_request.status }}</span></td>
+                            </tr>
+                            {% elif user_request.status == "منتهي" %}
+                            <tr>
+                                <td>{{user_request.user.first_name}} {{user_request.user.last_name}}</td>
+                                <td>{{ user_request.device_type }}</td>
+                                <td>{{user_request.problem_description}}</td>
+                                <td>{{user_request.device_id}}</td>
+                                <td>{{ user_request.request_date }}</td>
+                                <td>
+                                    <a href="{% url 'itsupport:request_detail_view' user_request.id %}" class="btn btn-success btn-sm">عرض التفاصيل</a>
+                                </td>
+                                <td ><span class="badge badge-status badge-closed"> {{ user_request.status }}</span></td>
+                            </tr>
+                            {% endif %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إغلاق</button>
+                    <button type="submit" class="btn btn-primary">إرسال</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-        </tbody>
-    </table>
+    <!-- Modal: Printer Ink Report -->
+    <div class="modal fade" id="printerModal" tabindex="-1" aria-labelledby="printerModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="printerModalLabel">طلبات أحبار الطابعة</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Add the content for printer ink requests here -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إغلاق</button>
+                    <button type="submit" class="btn btn-primary">إرسال</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}
+
