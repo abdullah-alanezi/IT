@@ -7,15 +7,14 @@
 {% block content %}
 
 
-
 <div class="container my-4">
-    <h4 class="text-right">طلباتي</h4>
-    <p class="text-right">عرض جميع طلباتي ومتابعة حالة الطلب</p>
+<h4 class="text-right">طلباتي</h4>
+<p class="text-right">عرض جميع طلباتي ومتابعة حالة الطلب</p>
 
-    <div class="mb-3 text-right">
-        <label>ابحث:</label>
-        <input type="search" class="form-control form-control-sm d-inline-block" style="width: auto;" placeholder="بحث...">
-    </div>
+<div class="mb-3 text-right">
+    <label>ابحث:</label>
+    <input type="search" class="form-control form-control-sm d-inline-block" style="width: auto;" placeholder="بحث...">
+</div>
 
     <div class="table-responsive">
         <table class="table table-striped table-bordered text-center">
@@ -68,60 +67,61 @@
             </tbody>
         </table>
     </div>
+
 </div>
 
 <!-- Modal -->
 <div class="modal fade" id="detailsModal" tabindex="-1" aria-labelledby="detailsModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="detailsModalLabel">تفاصيل الطلب</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="request-card">
-                    <div class="request-header">
-                        <div>
-                            <p><strong>نوع الطلب:</strong> <span id="request-type"></span></p>
-                            <p><strong>تاريخ الطلب:</strong> <span id="request-date"></span></p>
-                            <p><strong>اسم المسؤول:</strong> <span id="employee-name"></span></p>
-                            <p><strong>رقم الجوال:</strong> <span id="employee-phone"></span></p>
-                        </div>
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="detailsModalLabel">تفاصيل الطلب</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div class="request-card">
+                <div class="request-header">
+                    <div>
+                        <p><strong>مقدم الطلب:</strong> إبراهيم حمد الشمري</p>
+                        <p><strong>الجوال:</strong> 0542815001</p>
                     </div>
-                    
-                    <div class="request-details">
-                        <div>
-                            <p><strong>تفاصيل الطلب:</strong></p>
-                            <p id="request-details"></p>
-                            <img src="path mint.jpg" alt="تفاصيل الطلب" class="request-image">
-                        </div>
-                        <div class="status-section">
-                            <div id="request-status-badge" class="status-badge"></div>
-                            <div id="status-icon" class="status-icon"></div>
-                            <p id="status-text"></p>
-                        </div>
-                    </div>
-
-                    <div class="response-section">
-                        <div class="response">
-                            <p><strong>الرد:</strong> شكرا</p>
-                            <p class="response-time">تم الرد في: 17-07-2024 10:54:59 - 1 أسبوع مرت</p>
-                        </div>
-                        <textarea class="form-control" rows="3" placeholder="الرد على الطلب"></textarea>
-                        <button class="btn btn-primary mt-2">إرسال الرد</button>
+                    <div>
+                        <p><strong>نوع الطلب:</strong> أخرى</p>
+                        <p><strong>تاريخ الطلب:</strong> 17-07-2024 10:33:55</p>
                     </div>
                 </div>
+                
+                <div class="request-details">
+                    <div>
+                        <p><strong>تفاصيل الطلب:</strong></p>
+                        <p>تجربة</p>
+                        <!-- صورة الطلب المدمجة -->
+                        <img src="path_to_image.jpg" alt="تفاصيل الطلب" class="request-image">
+                    </div>
+                    <div class="status-section">
+                        <div class="status-badge">تم الانتهاء</div>
+                        <div class="status-icon">&#10004;</div>
+                        <p>الطلب منتهي</p>
+                    </div>
+                </div>
+
+                <div class="response-section">
+                    <div class="response">
+                        <p><strong>  :</strong> شكرا</p>
+                        <p class="response-time">تم الرد في: 17-07-2024 10:54:59 - 1 أسبوع مرت</p>
+                    </div>
+                    <textarea class="form-control" rows="3" placeholder="الرد على الطلب"></textarea>
+                    <button class="btn btn-primary mt-2">إرسال الرد</button>
+                </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إغلاق</button>
-            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إغلاق</button>
         </div>
     </div>
 </div>
 
-
-
-
+</div>
 
 
 

@@ -5,57 +5,172 @@
 
 {% block content %}
 
+<style>
+    .custom-container {
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        padding: 20px;
+        max-width: 900px;
+        margin: 50px auto;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .label {
+        font-weight: bold;
+        color: #6c757d;
+    }
+    .value {
+        color: #343a40;
+    }
+    .status {
+        border-radius: 4px;
+        padding: 4px 8px;
+        display: inline-block;
+    }
+    .status-open {
+        background-color: #e0f7fa;
+        color: #28a745; 
+    }
+    .status-in-progress {
+        background-color: #fff3cd;
+        color: #ffc107; 
+    }
+    .status-closed {
+        background-color: #f8d7da;
+        color: #dc3545; 
+    }
+    .btn-custom {
+        background-color: #ffc107;
+        color: white;
+        border: none;
+        border-radius: 20px;
+        padding: 10px 20px;
+        width: 100%;
+        margin-top: 20px;
+    }
+    .note {
+        border-left: 3px solid red;
+        padding-left: 10px;
+        margin-bottom: 10px;
+    }
+    .response-box {
+        margin-top: 20px;
+    }
+    .response-textarea {
+        width: 100%;
+        height: 100px;
+        border-radius: 4px;
+        border: 1px solid #ced4da;
+        padding: 10px;
+        box-sizing: border-box;
+    }
+    .response-button {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        padding: 10px 20px;
+        margin-top: 10px;
+        cursor: pointer;
+    }
+</style>
+</head>
+<body>
 
-<div class="container">
+<div class="custom-container">
+<div class="row">
+    <div class="col-12 mb-3 text-end">
+        <select class="form-select" id="statusSelect" aria-label="تغيير الحالة">
+            <option selected>تغيير الحالة</option>
+            <option value="open">مفتوح</option>
+            <option value="in_progress">تحت الإجراء</option>
+            <option value="closed">مغلق</option>
+        </select>
+    </div>
+    <div class="col-12 col-md-6">
+        <div class="label">نوع الطلب</div>
+        <div class="value mb-3">جهاز لابتوب</div>
+        <div class="value mb-3">{{ request_detail.request_type }}</div>
+
+        <div class="label">تفاصيل الطلب</div>
+        <div class="value mb-3">فورمات لابتوب وتعديل</div>
+        <div class="note">{{ request_detail.device_requested }}</div>
+        <div class="note">{{ request_detail.support_notes }}</div>
+
+        <div class="label">استلام الطلب</div>
+        <div class="value mb-3">نعم</div>
+    </div>
+
+    <div class="col-12 col-md-6">
+        <div class="label">اسم مقدم الطلب</div>
+        <div class="value mb-3">عبدالله محمد</div>
+
+        <div class="label">رقم الهاتف</div>
+        <div class="value mb-3">0543333</div>
+
+        <div class="label">الرقم الوظيفي</div>
+        <div class="value mb-3">123</div>
+
+        <div class="label">تاريخ الطلب</div>
+        <div class="value mb-3">{{ request_detail.request_date }}</div>
+
+        <div class="label">الحالة</div>
+        <div class="value mb-3"><span id="status" class="status status-open">{{ request_detail.status }}</span></div>
+    </div>
+</div>
+
+<div class="response-box">
+    <div class="label">إرسال رد</div>
+    <textarea class="response-textarea" placeholder="أدخل ردك هنا..."></textarea>
+    <button class="response-button">إرسال</button>
+</div>
 
 <div class="row">
-    <h2 class="mb-4 border border-1 border-success-subtle shadow p-3 bg-light w-25 rounded text-center">الطلبات</h2>
+    <button class="btn-custom" data-bs-toggle="modal" data-bs-target="#confirmModal">استلام الطلب</button>
+</div>
 </div>
 
-<div class="row border border-1 border-success-subtle shadow-lg p-3 bg-light rounded">
-
-    <div class="col-6">
-        <div class="label mb-4">الاسم: {{request_detail.user.first_name}}</div> 
-
-        <div class="label mb-4">البريد الإلكتروني: {{request_detail.user.email}}</div>
-        <div class="label mb-4"> التاريخ: {{request_detail.request_date}}</div> 
-
-        <div class="label"> حالة الطلب </div>
-
-        <div class="value"><span class="status">{{request_detail.status}}</span></div>
-        
-       
+<!-- Modal -->
+<div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="confirmModalLabel">تأكيد استلام الطلب</h5>
+        </div>
+        <div class="modal-body">
+            هل أنت متأكد من استلام الطلب؟
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">لا</button>
+            <button type="button" class="btn btn-primary">نعم</button>
+        </div>
     </div>
-    
-    <div class="col-6">
-        <div class="label  mb-4"> نوع الجهاز:{{request_detail.device_type}}</div>
-
-        <div class="label  mb-4">رقم الجهاز:{{request_detail.device_id}} </div>
-
-        <div class="label  mb-4">نوع الطابعة:ht12 </div>
-
-        <div class="label  mb-4"> رقم الطابعة:2314 </div>
-
-        <div class="label  mb-4">رقم الحبر:1452 </div>
- 
-
-
-        
-    </div>
-
+</div>
 </div>
 
-<div class="row mt-5 border border-1 border-success-subtle shadow-lg p-3 bg-light rounded">
-    <div class="label">وصف المشكلة</div>
-    <div class="value">{{ request_detail.problem_description }}</div>
-</div>
-<div class="row mt-5"></div>
-<div class="image-container"></div> 
-    
-    <img src="{{request_detail.image.url}}" alt="صورة المستخدم"></div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.2.0/js/bootstrap.min.js"></script>
+<script>
+document.getElementById('statusSelect').addEventListener('change', function() {
+var statusText = this.options[this.selectedIndex].text;
+var statusElement = document.getElementById('status');
 
-</div>
+statusElement.textContent = statusText;
 
+// Remove all status classes
+statusElement.classList.remove('status-open', 'status-in-progress', 'status-closed');
 
+// Add the appropriate class based on the selection
+if (this.value === 'open') {
+    statusElement.classList.add('status-open');
+} else if (this.value === 'in_progress') {
+    statusElement.classList.add('status-in-progress');
+} else if (this.value === 'closed') {
+    statusElement.classList.add('status-closed');
+}
+});
+</script>
+
+</body>
 
 {% endblock %}
