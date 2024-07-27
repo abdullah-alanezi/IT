@@ -3,7 +3,19 @@ from django.shortcuts import render,redirect
 from django.http import HttpRequest
 
 from .models import MaintenanceRequest,PrinterRequest
+from django.core.mail import send_mail
+from django.conf import settings
 # Create your views here.
+
+
+def send_order_status_email(recipient_email):
+    subject = 'حالة الطلب'
+    message = 'طلبك تحت الإجراء.'
+    email_from = settings.EMAIL_HOST_USER
+    recipient_list = [recipient_email]
+
+    send_mail(subject, message, email_from, recipient_list)
+
 
 
 def support_request(request:HttpRequest):
@@ -77,8 +89,21 @@ def request_detail_view(request:HttpRequest,request_id):
         return redirect("main:home_view")
     else:
         request_detail = MaintenanceRequest.objects.get(id=request_id)
+        user_email=request_detail.user.email
+        if request.method == "POST":
+            
+            recipient_email = user_email
+            print(request_detail.user.email)
+
+            send_order_status_email(recipient_email)
+            
+
 
     return render(request,"itsupport/request_detail.html",{"request_detail":request_detail})
+
+
+
+
 
 
 

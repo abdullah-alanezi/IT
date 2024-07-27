@@ -88,13 +88,12 @@
     </div>
     <div class="col-12 col-md-6">
         <div class="label">نوع الطلب</div>
-        <div class="value mb-3">جهاز لابتوب</div>
-        <div class="value mb-3">{{ request_detail.request_type }}</div>
+        
+        <div class="value mb-3">{{ request_detail.device_type }}</div>
 
         <div class="label">تفاصيل الطلب</div>
-        <div class="value mb-3">فورمات لابتوب وتعديل</div>
-        <div class="note">{{ request_detail.device_requested }}</div>
-        <div class="note">{{ request_detail.support_notes }}</div>
+        <div class="value mb-3">{{request_detail.problem_description}}</div>
+
 
         <div class="label">استلام الطلب</div>
         <div class="value mb-3">نعم</div>
@@ -102,10 +101,10 @@
 
     <div class="col-12 col-md-6">
         <div class="label">اسم مقدم الطلب</div>
-        <div class="value mb-3">عبدالله محمد</div>
+        <div class="value mb-3">{{request_detail.user.first_name}} {{request_detail.user.last_name}}</div>
 
-        <div class="label">رقم الهاتف</div>
-        <div class="value mb-3">0543333</div>
+        <div class="label">البريد الإلكتروني</div>
+        <div class="value mb-3">{{request_detail.user.email}}</div>
 
         <div class="label">الرقم الوظيفي</div>
         <div class="value mb-3">123</div>
@@ -141,7 +140,10 @@
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">لا</button>
-            <button type="button" class="btn btn-primary">نعم</button>
+            <form action="{% url 'itsupport:request_detail_view' request_detail.id  %}" method="post">
+                {% csrf_token %}
+            <button type="submit" class="btn btn-primary">نعم</button>
+        </form>
         </div>
     </div>
 </div>
