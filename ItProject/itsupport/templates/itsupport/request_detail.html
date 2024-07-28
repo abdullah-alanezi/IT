@@ -5,6 +5,7 @@
 
 {% block content %}
 
+
 <style>
     .custom-container {
         background-color: #f8f9fa;
@@ -28,24 +29,35 @@
     }
     .status-open {
         background-color: #e0f7fa;
-        color: #28a745; 
+        color: #28a745;
     }
     .status-in-progress {
         background-color: #fff3cd;
-        color: #ffc107; 
+        color: #ffc107;
     }
     .status-closed {
         background-color: #f8d7da;
-        color: #dc3545; 
+        color: #dc3545;
+    }
+    .btn-container {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+    }
+    .btn-custom, .btn-close {
+        flex: 1;
+        margin: 0 5px;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 20px;
+        color: white;
+        cursor: pointer;
     }
     .btn-custom {
         background-color: #ffc107;
-        color: white;
-        border: none;
-        border-radius: 20px;
-        padding: 10px 20px;
-        width: 100%;
-        margin-top: 20px;
+    }
+    .btn-close {
+        background-color: #b21f2d; /* لون أحمر داكن */
     }
     .note {
         border-left: 3px solid red;
@@ -78,22 +90,12 @@
 
 <div class="custom-container">
 <div class="row">
-    <div class="col-12 mb-3 text-end">
-        <select class="form-select" id="statusSelect" aria-label="تغيير الحالة">
-            <option selected>تغيير الحالة</option>
-            <option value="open">مفتوح</option>
-            <option value="in_progress">تحت الإجراء</option>
-            <option value="closed">مغلق</option>
-        </select>
-    </div>
     <div class="col-12 col-md-6">
         <div class="label">نوع الطلب</div>
-        
         <div class="value mb-3">{{ request_detail.device_type }}</div>
 
         <div class="label">تفاصيل الطلب</div>
-        <div class="value mb-3">{{request_detail.problem_description}}</div>
-
+        <div class="value mb-3">{{ request_detail.problem_description }}</div>
 
         <div class="label">استلام الطلب</div>
         <div class="value mb-3">نعم</div>
@@ -101,10 +103,10 @@
 
     <div class="col-12 col-md-6">
         <div class="label">اسم مقدم الطلب</div>
-        <div class="value mb-3">{{request_detail.user.first_name}} {{request_detail.user.last_name}}</div>
+        <div class="value mb-3">{{ request_detail.user.first_name }} {{ request_detail.user.last_name }}</div>
 
         <div class="label">البريد الإلكتروني</div>
-        <div class="value mb-3">{{request_detail.user.email}}</div>
+        <div class="value mb-3">{{ request_detail.user.email }}</div>
 
         <div class="label">الرقم الوظيفي</div>
         <div class="value mb-3">123</div>
@@ -117,23 +119,45 @@
     </div>
 </div>
 
+<div class="btn-container">
+    <button class="btn-custom" data-bs-toggle="modal" data-bs-target="#confirmReceiveModal">استلام الطلب</button>
+    <button class="btn-close" data-bs-toggle="modal" data-bs-target="#confirmCloseModal">إغلاق الطلب</button>
+</div>
+
 <div class="response-box">
     <div class="label">إرسال رد</div>
     <textarea class="response-textarea" placeholder="أدخل ردك هنا..."></textarea>
     <button class="response-button">إرسال</button>
 </div>
-
-<div class="row">
-    <button class="btn-custom" data-bs-toggle="modal" data-bs-target="#confirmModal">استلام الطلب</button>
-</div>
 </div>
 
-<!-- Modal -->
-<div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+<!-- Modal for Closing Request -->
+<div class="modal fade" id="confirmCloseModal" tabindex="-1" aria-labelledby="confirmCloseModalLabel" aria-hidden="true">
 <div class="modal-dialog">
     <div class="modal-content">
         <div class="modal-header">
-            <h5 class="modal-title" id="confirmModalLabel">تأكيد استلام الطلب</h5>
+            <h5 class="modal-title" id="confirmCloseModalLabel">تأكيد إغلاق الطلب</h5>
+        </div>
+        <div class="modal-body">
+            هل أنت متأكد من إغلاق الطلب؟
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">لا</button>
+            <form action="{% url 'itsupport:request_detail_view' request_detail.id  %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary">نعم</button>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+
+<!-- Modal for Receiving Request -->
+<div class="modal fade" id="confirmReceiveModal" tabindex="-1" aria-labelledby="confirmReceiveModalLabel" aria-hidden="true">
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="confirmReceiveModalLabel">تأكيد استلام الطلب</h5>
         </div>
         <div class="modal-body">
             هل أنت متأكد من استلام الطلب؟
@@ -142,37 +166,17 @@
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">لا</button>
             <form action="{% url 'itsupport:request_detail_view' request_detail.id  %}" method="post">
                 {% csrf_token %}
-            <button type="submit" class="btn btn-primary">نعم</button>
-        </form>
+                <button type="submit" class="btn btn-primary">نعم</button>
+            </form>
         </div>
     </div>
 </div>
 </div>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.2.0/js/bootstrap.min.js"></script>
-<script>
-document.getElementById('statusSelect').addEventListener('change', function() {
-var statusText = this.options[this.selectedIndex].text;
-var statusElement = document.getElementById('status');
 
-statusElement.textContent = statusText;
 
-// Remove all status classes
-statusElement.classList.remove('status-open', 'status-in-progress', 'status-closed');
 
-// Add the appropriate class based on the selection
-if (this.value === 'open') {
-    statusElement.classList.add('status-open');
-} else if (this.value === 'in_progress') {
-    statusElement.classList.add('status-in-progress');
-} else if (this.value === 'closed') {
-    statusElement.classList.add('status-closed');
-}
-});
-</script>
 
-</body>
+
 
 {% endblock %}
