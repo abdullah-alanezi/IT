@@ -27,12 +27,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr data-status="مفتوح" data-request-type="صيانة" data-request-date="17-07-2024 10:33:55" data-details="تجربة" data-employee-name="محمد أحمد" data-employee-phone="1234567890">
-                    <td>123</td>
-                    <td>صيانة</td>
-                    <td><span class="badge badge-status badge-open">مفتوح</span></td>
-                    <td><button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#detailsModal">التفاصيل</button></td>
-                </tr>
+
                 {% for order in my_order %}
                 {% if order.status == "منتهي" %}
                 <tr data-status="{{order.status}}" data-request-type="تركيب" data-request-date="17-07-2024 11:00:00" data-details="تركيب جهاز" data-employee-name="سعيد علي" data-employee-phone="0987654321">
@@ -41,7 +36,7 @@
                     
                     <td><span class="badge badge-status badge-closed">{{order.status}}</span></td>
                     
-                    <td><button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#detailsModal">التفاصيل</button></td>
+                    <td><a href="{% url 'itsupport:request_detail_view' order.id %}" class="btn btn-success btn-sm">التفاصيل</a></td>
                 </tr>
                 {% elif order.status == "تحت الإجراء" %}
                 <tr data-status="{{order.status}}" data-request-type="تركيب" data-request-date="17-07-2024 11:00:00" data-details="تركيب جهاز" data-employee-name="سعيد علي" data-employee-phone="0987654321">
@@ -50,16 +45,16 @@
                     
                     <td><span class="badge badge-status badge-in-progress">{{order.status}}</span></td>
                     
-                    <td><button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#detailsModal">التفاصيل</button></td>
+                    <td><a href="{% url 'itsupport:request_detail_view' order.id %}" class="btn btn-success btn-sm">التفاصيل</a></td>
                 </tr>
                 {% elif order.status == "مفتوح" %}
-                <tr data-status="{{order.status}}" data-request-type="تركيب" data-request-date="17-07-2024 11:00:00" data-details="تركيب جهاز" data-employee-name="سعيد علي" data-employee-phone="0987654321">
+                <tr >
                     <td>{{order.id}}</td>
-                    <td>{{order.problem_description}}</td>
+                    <td>{{order.device_type}}</td>
                     
                     <td><span class="badge badge-status badge-open">{{order.status}}</span></td>
                     
-                    <td><button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#detailsModal">التفاصيل</button></td>
+                    <td><a href="{% url 'itsupport:request_detail_view' order.id %}" class="btn btn-success btn-sm">التفاصيل</a></td>
                 </tr>
                 {% endif %}
                 
@@ -70,58 +65,7 @@
 
 </div>
 
-<!-- Modal -->
-<div class="modal fade" id="detailsModal" tabindex="-1" aria-labelledby="detailsModalLabel" aria-hidden="true">
-<div class="modal-dialog">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="detailsModalLabel">تفاصيل الطلب</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-            <div class="request-card">
-                <div class="request-header">
-                    <div>
-                        <p><strong>مقدم الطلب:</strong> إبراهيم حمد الشمري</p>
-                        <p><strong>الجوال:</strong> 0542815001</p>
-                    </div>
-                    <div>
-                        <p><strong>نوع الطلب:</strong> أخرى</p>
-                        <p><strong>تاريخ الطلب:</strong> 17-07-2024 10:33:55</p>
-                    </div>
-                </div>
-                
-                <div class="request-details">
-                    <div>
-                        <p><strong>تفاصيل الطلب:</strong></p>
-                        <p>تجربة</p>
-                        <!-- صورة الطلب المدمجة -->
-                        <img src="path_to_image.jpg" alt="تفاصيل الطلب" class="request-image">
-                    </div>
-                    <div class="status-section">
-                        <div class="status-badge">تم الانتهاء</div>
-                        <div class="status-icon">&#10004;</div>
-                        <p>الطلب منتهي</p>
-                    </div>
-                </div>
 
-                <div class="response-section">
-                    <div class="response">
-                        <p><strong>  :</strong> شكرا</p>
-                        <p class="response-time">تم الرد في: 17-07-2024 10:54:59 - 1 أسبوع مرت</p>
-                    </div>
-                    <textarea class="form-control" rows="3" placeholder="الرد على الطلب"></textarea>
-                    <button class="btn btn-primary mt-2">إرسال الرد</button>
-                </div>
-            </div>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إغلاق</button>
-        </div>
-    </div>
-</div>
-
-</div>
 
 
 

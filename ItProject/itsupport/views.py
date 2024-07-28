@@ -85,10 +85,10 @@ def add_printer_request(request:HttpRequest):
     
 def request_detail_view(request:HttpRequest,request_id):
 
-    if not request.user.is_staff:
-        return redirect("main:home_view")
-    else:
-        request_detail = MaintenanceRequest.objects.get(id=request_id)
+    request_detail = MaintenanceRequest.objects.get(id=request_id)
+    if request.user.is_staff:
+
+        
         user_email=request_detail.user.email
         if request.method == "POST":
             
@@ -96,6 +96,10 @@ def request_detail_view(request:HttpRequest,request_id):
             print(request_detail.user.email)
 
             send_order_status_email(recipient_email)
+
+            request_detail.status = 'تحت الإجراء'
+            request_detail.save
+            return redirect("itsupport:request_detail_view",request_id)
             
 
 
