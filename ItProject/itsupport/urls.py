@@ -9,4 +9,5 @@ urlpatterns =[
     path("my/order/",views.my_order,name="my_order"),
     path("add/prenter/request",views.add_printer_request,name="add_printer_request"),
     path("request/detail/<request_id>",views.request_detail_view,name="request_detail_view"),
+    path("close/order/<request_id>",views.close_order,name="close_order")
 ]

@@ -27,19 +27,31 @@
                 </tr>
             </thead>
             <tbody>
-
+                {{my_order.count}}
                 {% for order in my_order %}
-                {% if order.status == "منتهي" %}
-                <tr data-status="{{order.status}}" data-request-type="تركيب" data-request-date="17-07-2024 11:00:00" data-details="تركيب جهاز" data-employee-name="سعيد علي" data-employee-phone="0987654321">
+                
+                <tr>
                     <td>{{order.id}}</td>
                     <td>{{order.problem_description}}</td>
+
+                    {% if order.status == "تحت الإجراء" %}
+                    <td><span class="badge badge-status badge-in-progress">{{order.status}}</span></td>
                     
+
+                    {% elif order.status == "مفتوح" %}
+                    <td><span class="badge badge-status badge-open">{{order.status}}</span></td>
+                    
+
+                    {% elif order.status == "منتهي" %}
                     <td><span class="badge badge-status badge-closed">{{order.status}}</span></td>
+                    {% endif %}
+
+                    
                     
                     <td><a href="{% url 'itsupport:request_detail_view' order.id %}" class="btn btn-success btn-sm">التفاصيل</a></td>
                 </tr>
-                {% elif order.status == "تحت الإجراء" %}
-                <tr data-status="{{order.status}}" data-request-type="تركيب" data-request-date="17-07-2024 11:00:00" data-details="تركيب جهاز" data-employee-name="سعيد علي" data-employee-phone="0987654321">
+<!--                 
+                <tr >
                     <td>{{order.id}}</td>
                     <td>{{order.problem_description}}</td>
                     
@@ -47,7 +59,6 @@
                     
                     <td><a href="{% url 'itsupport:request_detail_view' order.id %}" class="btn btn-success btn-sm">التفاصيل</a></td>
                 </tr>
-                {% elif order.status == "مفتوح" %}
                 <tr >
                     <td>{{order.id}}</td>
                     <td>{{order.device_type}}</td>
@@ -55,8 +66,7 @@
                     <td><span class="badge badge-status badge-open">{{order.status}}</span></td>
                     
                     <td><a href="{% url 'itsupport:request_detail_view' order.id %}" class="btn btn-success btn-sm">التفاصيل</a></td>
-                </tr>
-                {% endif %}
+                </tr> -->
                 
                 {% endfor %}
             </tbody>
