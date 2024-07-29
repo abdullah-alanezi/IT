@@ -58,7 +58,7 @@
                                 <td>
                                     <a href="{% url 'itsupport:request_detail_view' user_request.id %}" class="btn btn-success btn-sm">عرض التفاصيل</a>
                                 </td>
-                                <td ><span class="badge badge-status badge-open"> {{ user_request.status }}</span></td>
+                                <td><span class="badge badge-status badge-open"> {{ user_request.status }}</span></td>
                             </tr>
                             {% elif user_request.status == "تحت الإجراء" %}
                             <tr>
@@ -70,7 +70,7 @@
                                 <td>
                                     <a href="{% url 'itsupport:request_detail_view' user_request.id %}" class="btn btn-success btn-sm">عرض التفاصيل</a>
                                 </td>
-                                <td ><span class="badge badge-status badge-in-progress"> {{ user_request.status }}</span></td>
+                                <td><span class="badge badge-status badge-in-progress"> {{ user_request.status }}</span></td>
                             </tr>
                             {% elif user_request.status == "منتهي" %}
                             <tr>
@@ -82,7 +82,7 @@
                                 <td>
                                     <a href="{% url 'itsupport:request_detail_view' user_request.id %}" class="btn btn-success btn-sm">عرض التفاصيل</a>
                                 </td>
-                                <td ><span class="badge badge-status badge-closed"> {{ user_request.status }}</span></td>
+                                <td><span class="badge badge-status badge-closed"> {{ user_request.status }}</span></td>
                             </tr>
                             {% endif %}
                             {% endfor %}
@@ -91,7 +91,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إغلاق</button>
-                    <button type="submit" class="btn btn-primary">إرسال</button>
+                    
                 </div>
             </div>
         </div>
@@ -106,11 +106,89 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <!-- Add the content for printer ink requests here -->
+                    <h2 class="mb-4 text-center">طلبات أحبار الطابعة</h2>
+                    <table class="table table-bordered table-striped table-hover">
+                        <thead class="bg-dark text-white">
+                            <tr>
+                                <th scope="col">اسم المستخدم</th>
+                                <th scope="col">نوع الطابعة</th>
+                                <th scope="col">رقم الطابعة</th>
+                                <th scope="col">رقم الحبر</th>
+                                <th scope="col">تاريخ إنشاء الطلب</th>
+                                <th scope="col">تفاصيل</th>
+                                <th scope="col">الحالة</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for ink_request in ink_requests %}
+                            {% if ink_request.status == "مفتوح" %}
+                            <tr>
+                                <td>{{ink_request.user.first_name}} {{ink_request.user.last_name}}</td>
+                                <td>{{ ink_request.printer_type }}</td>
+                                <td>{{ink_request.ink_type}}</td>
+                                <td>{{ink_request.printer_id}}</td>
+                                <td>{{ ink_request.request_date }}</td>
+                                <td>
+                                    <a href="{% url 'itsupport:ink_request_detail_view' ink_request.id %}" class="btn btn-success btn-sm">عرض التفاصيل</a>
+                                </td>
+                                <td><span class="badge badge-status badge-open"> {{ ink_request.status }}</span></td>
+                            </tr>
+                            {% elif ink_request.status == "تحت الإجراء" %}
+                            <tr>
+                                <td>{{ink_request.user.first_name}} {{ink_request.user.last_name}}</td>
+                                <td>{{ ink_request.printer_type }}</td>
+                                <td>{{ink_request.ink_type}}</td>
+                                <td>{{ink_request.printer_id}}</td>
+                                <td>{{ ink_request.request_date }}</td>
+                                <td>
+                                    <a href="{% url 'itsupport:ink_request_detail_view' ink_request.id %}" class="btn btn-success btn-sm">عرض التفاصيل</a>
+                                </td>
+                                <td><span class="badge badge-status badge-in-progress"> {{ ink_request.status }}</span></td>
+                            </tr>
+                            {% elif ink_request.status == "منتهي" %}
+                            <tr>
+                                <td>{{ink_request.user.first_name}} {{ink_request.user.last_name}}</td>
+                                <td>{{ ink_request.printer_type }}</td>
+                                <td>{{ink_request.ink_type}}</td>
+                                <td>{{ink_request.printer_id}}</td>
+                                <td>{{ ink_request.request_date }}</td>
+                                <td>
+                                    <a href="{% url 'itsupport:ink_request_detail_view' ink_request.id %}" class="btn btn-success btn-sm">عرض التفاصيل</a>
+                                </td>
+                                <td><span class="badge badge-status badge-closed"> {{ ink_request.status }}</span></td>
+                            </tr>
+                            {% endif %}
+                            {% empty %}
+                            <!-- Adding fake data when the list is empty -->
+                            <tr>
+                                <td>أحمد محمد</td>
+                                <td>HP LaserJet 1020</td>
+                                <td>12345</td>
+                                <td>67890</td>
+                                <td>2024-07-01</td>
+                                <td>
+                                    <a href="#" class="btn btn-success btn-sm">عرض التفاصيل</a>
+                                </td>
+                                <td><span class="badge badge-status badge-open">مفتوح</span></td>
+                            </tr>
+                            <tr>
+                                <td>ليلى حسن</td>
+                                <td>Canon PIXMA G3010</td>
+                                <td>54321</td>
+                                <td>09876</td>
+                                <td>2024-07-05</td>
+                                <td>
+                                    <a href="#" class="btn btn-success btn-sm">عرض التفاصيل</a>
+                                </td>
+                                <td><span class="badge badge-status badge-in-progress">تحت الإجراء</span></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إغلاق</button>
-                    <button type="submit" class="btn btn-primary">إرسال</button>
+                 
                 </div>
             </div>
         </div>
