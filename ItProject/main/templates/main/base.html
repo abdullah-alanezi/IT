@@ -51,8 +51,8 @@
                         {%elif request.user.is_staff %}
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="{% url 'itsupport:user_request_view' %}">طلبات الدعم</a></li>
-                            <li><a class="dropdown-item" href="#">جاري العمل عليها</a></li>
-                            <li><a class="dropdown-item" href="#">شيء آخر هنا</a></li>
+                            <li><a class="dropdown-item" href="{% url 'itsupport:on_work_view' %}">جاري العمل عليها</a></li>
+                            <li><a class="dropdown-item" href="{% url 'itsupport:done_work_view' %}">منتهي</a></li>
                         </ul>
                     </li>
                 </ul>

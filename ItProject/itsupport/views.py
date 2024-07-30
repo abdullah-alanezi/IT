@@ -131,10 +131,19 @@ def close_order(request:HttpRequest,request_id):
             request_detail.status = "منتهي "
             request_detail.save()
             return redirect("itsupport:request_detail_view",request_id)
+        
 
 
 
+def on_work_view(request:HttpRequest):
 
+    return render(request,"itsupport/on_work.html")
+
+
+
+def done_work_view(request:HttpRequest):
+
+    return render(request,"itsupport/done_work.html")
 
 
 
