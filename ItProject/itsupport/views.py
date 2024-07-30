@@ -59,10 +59,11 @@ def user_request_view(request:HttpRequest):
         return redirect("main:home_view")
 
     user_request = MaintenanceRequest.objects.all()
+    ink_requests = PrinterRequest.objects.all()
 
     
 
-    return render(request,"itsupport/user_request.html",{"users_requests":user_request})
+    return render(request,"itsupport/user_request.html",{"users_requests":user_request,"ink_requests":ink_requests})
 
 
 def my_order(request:HttpRequest):

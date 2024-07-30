@@ -125,11 +125,13 @@
                             <tr>
                                 <td>{{ink_request.user.first_name}} {{ink_request.user.last_name}}</td>
                                 <td>{{ ink_request.printer_type }}</td>
-                                <td>{{ink_request.ink_type}}</td>
                                 <td>{{ink_request.printer_id}}</td>
+                                
+                                <td>{{ink_request.ink_id}}</td>
+                                
                                 <td>{{ ink_request.request_date }}</td>
                                 <td>
-                                    <a href="{% url 'itsupport:ink_request_detail_view' ink_request.id %}" class="btn btn-success btn-sm">عرض التفاصيل</a>
+                                    <a href="#" class="btn btn-success btn-sm">عرض التفاصيل</a>
                                 </td>
                                 <td><span class="badge badge-status badge-open"> {{ ink_request.status }}</span></td>
                             </tr>
@@ -137,11 +139,12 @@
                             <tr>
                                 <td>{{ink_request.user.first_name}} {{ink_request.user.last_name}}</td>
                                 <td>{{ ink_request.printer_type }}</td>
-                                <td>{{ink_request.ink_type}}</td>
+                                
                                 <td>{{ink_request.printer_id}}</td>
+                                <td>{{ink_request.ink_id}}</td>
                                 <td>{{ ink_request.request_date }}</td>
                                 <td>
-                                    <a href="{% url 'itsupport:ink_request_detail_view' ink_request.id %}" class="btn btn-success btn-sm">عرض التفاصيل</a>
+                                    <a href="#" class="btn btn-success btn-sm">عرض التفاصيل</a>
                                 </td>
                                 <td><span class="badge badge-status badge-in-progress"> {{ ink_request.status }}</span></td>
                             </tr>
@@ -149,39 +152,17 @@
                             <tr>
                                 <td>{{ink_request.user.first_name}} {{ink_request.user.last_name}}</td>
                                 <td>{{ ink_request.printer_type }}</td>
-                                <td>{{ink_request.ink_type}}</td>
+                                
                                 <td>{{ink_request.printer_id}}</td>
+                                <td>{{ink_request.ink_id}}</td>
                                 <td>{{ ink_request.request_date }}</td>
                                 <td>
-                                    <a href="{% url 'itsupport:ink_request_detail_view' ink_request.id %}" class="btn btn-success btn-sm">عرض التفاصيل</a>
+                                    <a href="#" class="btn btn-success btn-sm">عرض التفاصيل</a>
                                 </td>
-                                <td><span class="badge badge-status badge-closed"> {{ ink_request.status }}</span></td>
+                                <td><span class="badge badge-status badge-closed">{{ ink_request.status }}</span></td>
                             </tr>
                             {% endif %}
-                            {% empty %}
-                            <!-- Adding fake data when the list is empty -->
-                            <tr>
-                                <td>أحمد محمد</td>
-                                <td>HP LaserJet 1020</td>
-                                <td>12345</td>
-                                <td>67890</td>
-                                <td>2024-07-01</td>
-                                <td>
-                                    <a href="#" class="btn btn-success btn-sm">عرض التفاصيل</a>
-                                </td>
-                                <td><span class="badge badge-status badge-open">مفتوح</span></td>
-                            </tr>
-                            <tr>
-                                <td>ليلى حسن</td>
-                                <td>Canon PIXMA G3010</td>
-                                <td>54321</td>
-                                <td>09876</td>
-                                <td>2024-07-05</td>
-                                <td>
-                                    <a href="#" class="btn btn-success btn-sm">عرض التفاصيل</a>
-                                </td>
-                                <td><span class="badge badge-status badge-in-progress">تحت الإجراء</span></td>
-                            </tr>
+
                             {% endfor %}
                         </tbody>
                     </table>

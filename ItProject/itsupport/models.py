@@ -31,17 +31,17 @@ class PrinterRequest(models.Model):
 
     
     STATUS_CHOICES = [
-        ('sendit', 'تم إرسال الطلب'),
-        ('pending', 'تحت الإجراء'),
+        ('مفتوح','مفتوح' ),
+        ( 'تحت الإجراء','تحت الإجراء'),
         
-        ('completed', 'منفذ'),
+        ('منتهي','منتهي'),
     ]
     
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     printer_type = models.CharField(max_length=255)
     printer_id = models.CharField(max_length=100)
     ink_id = models.CharField(max_length=100)
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='تم إرسال الطلب')
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='مفتوح')
     request_date = models.DateTimeField(auto_now_add=True)
     image = models.ImageField(upload_to='images/',default="images/default.jpg")
     
