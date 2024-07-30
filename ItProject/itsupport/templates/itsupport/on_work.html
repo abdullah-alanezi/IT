@@ -6,4 +6,93 @@
 {% block content %}
 
 
+
+
+
+<style>
+    .custom-container {
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        padding: 20px;
+        max-width: 1200px;
+        margin: 50px auto;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .custom-table thead {
+        background-color: #343a40;
+        color: #ffffff;
+    }
+    .badge-status {
+        border-radius: 4px;
+        padding: 4px 8px;
+        display: inline-block;
+        font-size: 0.9em;
+    }
+    .badge-open {
+        background-color: #e0f7fa;
+        color: #28a745;
+    }
+    .badge-in-progress {
+        background-color: #fff3cd;
+        color: #ffc107;
+    }
+    .badge-closed {
+        background-color: #f8d7da;
+        color: #dc3545;
+    }
+    .btn-view-details {
+        margin: 0;
+    }
+</style>
+</head>
+<body>
+
+<div class="container mt-5">
+<div class="custom-container">
+    <h2 class="text-center mb-4">طلبات تحت الاجراء</h2>
+    <table class="table table-bordered table-striped table-hover custom-table">
+        <thead>
+            
+            <tr>
+                <th scope="col">اسم المستخدم</th>
+                <th scope="col"> ايميل</th>
+                <th scope="col">نوع الطلب</th>
+                <th scope="col">تاريخ إنشاء الطلب</th>
+                <th scope="col">التفاصيل</th>
+               
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>إبراهيم حمد</td>
+                <td>iialjassar@gmail.com</td>
+                <td>صيانة</td>    
+                <td>2024-07-29</td>
+                <td>
+                    <a href="#" class="btn btn-success btn-sm btn-view-details">عرض التفاصيل</a>
+                </td>
+              
+            </tr>
+            <tr>
+                <td>سعيد عبد الله</td>
+                <td>sjjs@gmail.com</td>
+                <td>أحبار  </td>
+                <td>2024-07-30</td>
+                <td>
+                    <a href="#" class="btn btn-success btn-sm btn-view-details">عرض التفاصيل</a>
+                </td>
+             
+            </tr>
+        </tbody>
+    </table>
+</div>
+</div>
+
+
+</body>
+</html>
+
+
+
+
 {% endblock %}
