@@ -5,6 +5,7 @@ from django.http import HttpRequest
 from .models import MaintenanceRequest,PrinterRequest
 from django.core.mail import send_mail
 from django.conf import settings
+from django.contrib.auth.models import User
 # Create your views here.
 
 
@@ -19,25 +20,43 @@ def send_order_status_email(recipient_email):
 
 
 def support_request(request:HttpRequest):
-    if request.user.is_authenticated:
-        if request.method == "POST":
-            user_request =MaintenanceRequest(
-                user=request.user,
-                device_type=request.POST["device_type"],
-                device_id=request.POST["device_id"],
-                problem_description =request.POST["problem_description"],
-                image = request.FILES["image"]
-                )
-            user_request.save()
-            return redirect("itsupport:my_order")
+    msg=None
+    user = User.objects.get(id=request.user.id)
+    orders = MaintenanceRequest.objects.filter(user=user)
+    is_there =True
+
+    for order in orders:
+        if order.status =='تحت الإجراء' or order.status =='مفتوح':
+            is_there = False
+            break
+    
+    print(is_there)
+    if is_there:
+    
+        if request.user.is_authenticated:
+            if request.method == "POST":
+                user_request =MaintenanceRequest(
+                    user=request.user,
+                    device_type=request.POST["device_type"],
+                    device_id=request.POST["device_id"],
+                    problem_description =request.POST["problem_description"],
+                    image = request.FILES["image"]
+                    )
+                user_request.save()
+                return redirect("itsupport:my_order")
+        else:
+            return redirect("user:login_view")
     else:
-        return redirect("user:login_view")
+        msg="لايمكنك رفع طلب اخر حتى يغلق طلبك"
 
 
-    return render(request,"itsupport/support_request.html")
+    return render(request,"itsupport/support_request.html",{"msg":msg})
+
 
 
 def user_request_view(request:HttpRequest):
+    if not request.user.is_staff:
+        return redirect("main:home_view")
 
     user_request = MaintenanceRequest.objects.all()
 
@@ -47,18 +66,10 @@ def user_request_view(request:HttpRequest):
 
 
 def my_order(request:HttpRequest):
-    # class_name=None
-    my_order = MaintenanceRequest.objects.filter(user=request.user)
+    user = User.objects.get(id=request.user.id)
+    my_order = MaintenanceRequest.objects.filter(user=user)
     
-    # for order in my_order:
-
-    #     if order.status == "منتهي":
-    #         class_name="badge badge-status badge-closed"
-            
-    #     elif order.status =="تحت الإجراء":
-    #         class_name="badge badge-status badge-in-progress"
-    #     elif order.status =="مفتوح":
-    #         class_name="badge badge-status badge-open"
+    
 
     return render(request,"itsupport/my_order.html",{"my_order":my_order})
 
@@ -96,14 +107,32 @@ def request_detail_view(request:HttpRequest,request_id):
             print(request_detail.user.email)
 
             send_order_status_email(recipient_email)
-
-            request_detail.status = 'تحت الإجراء'
-            request_detail.save
+            
+            request_detail.status = "تحت الإجراء"
+            request_detail.save()
             return redirect("itsupport:request_detail_view",request_id)
             
 
 
     return render(request,"itsupport/request_detail.html",{"request_detail":request_detail})
+
+
+
+def close_order(request:HttpRequest,request_id):
+
+    request_detail = MaintenanceRequest.objects.get(id=request_id)
+    if request.user.is_staff:
+
+        
+        
+        if request.method == "POST":
+            
+            
+            request_detail.status = "منتهي "
+            request_detail.save()
+            return redirect("itsupport:request_detail_view",request_id)
+
+
 
 
 

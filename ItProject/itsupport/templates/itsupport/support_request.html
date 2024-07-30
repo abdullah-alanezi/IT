@@ -34,6 +34,7 @@
         <form action="{% url 'itsupport:support_request' %}" method="post" enctype="multipart/form-data">
           {% csrf_token %}
 
+
           <div class="modal-body">
             <!-- نوع الجهاز -->
             <div class="mb-3">
@@ -68,7 +69,11 @@
 
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">أغلاق</button>
+            {% if msg %}
+            <p  class="alert alert-danger">{{msg}}</p>
+            {% else %}
             <button type="submit" class="btn btn-primary">إرسال</button>
+            {% endif %}
           </div>
         </form>
       </div>
