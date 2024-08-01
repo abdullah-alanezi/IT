@@ -40,8 +40,11 @@ def support_request(request:HttpRequest):
                     device_type=request.POST["device_type"],
                     device_id=request.POST["device_id"],
                     problem_description =request.POST["problem_description"],
-                    image = request.FILES["image"]
+                    
                     )
+                if "image" in request.FILES:
+                    user_request.image =request.FILES["image"]
+                    
                 user_request.save()
                 return redirect("itsupport:my_order")
         else:
@@ -122,6 +125,7 @@ def request_detail_view(request:HttpRequest,request_id):
 def close_order(request:HttpRequest,request_id):
 
     request_detail = MaintenanceRequest.objects.get(id=request_id)
+
     if request.user.is_staff:
 
         
@@ -129,7 +133,7 @@ def close_order(request:HttpRequest,request_id):
         if request.method == "POST":
             
             
-            request_detail.status = "منتهي "
+            request_detail.status = 'منتهي'
             request_detail.save()
             return redirect("itsupport:request_detail_view",request_id)
         

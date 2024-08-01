@@ -14,9 +14,12 @@
     </div>
 </div>
 
+{% if not request.user.is_authenticated %}
 <div class="row d-flex justify-content-center mt-3 ">
     <a href="{% url 'user:login_view' %}"  class=" d-flex justify-content-center  btn btn-outline-success mt-1 border border-0 shadow p-2  rounded w-25 ">التسجيل</a>
     </div>
+
+{% endif %}
 
 
 {%endblock%}
