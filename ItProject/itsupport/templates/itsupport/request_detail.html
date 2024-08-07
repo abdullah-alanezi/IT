@@ -121,8 +121,11 @@
 </div>
 {% if request.user.is_staff %}
 <div class="btn-container">
+    {% if request_detail.status == "مفتوح" %}
     <button class="btn-custom" data-bs-toggle="modal" data-bs-target="#confirmReceiveModal">استلام الطلب</button>
+    {% elif request_detail.status == 'تحت الإجراء' %}
     <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmCloseModal">إغلاق الطلب</button>
+    {% endif %}
 </div>
 {% endif %}
 

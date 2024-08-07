@@ -49,6 +49,7 @@
 <div class="custom-container">
     <h2 class="text-center mb-4">طلبات  منتهية</h2>
     <table class="table table-bordered table-striped table-hover custom-table">
+        {% if done_works.count != 0 %}
         <thead>
             <tr>
                 <th scope="col">اسم المستخدم</th>
@@ -60,24 +61,25 @@
             </tr>
         </thead>
         <tbody>
+            
+            
+            {% for done in done_works%}
             <tr>
-                <td>إبراهيم حمد</td>
-                <td>iialjassar@gmail.com</td>
-                <td>صيانة</td>
-                <td>2024-07-29</td>
+                <td>{{done.user.first_name}} {{done.user.last_name}}</td>
+                <td>{{done.user.email}}</td>
+                <td>{{done.device_type}}</td>
+                <td>{{done.request_date}}</td>
 
               
             </tr>
-            <tr>
-                <td>سعيد عبد الله</td>
-                <td>sjjs@gmail.com</td>
-                <td>أحبار  </td>
-                <td>2024-07-30</td>
+            
+            {% endfor %}
 
-             
-            </tr>
         </tbody>
     </table>
+    {% else %}
+    <tr><p>لا توجد طلابات</p></tr>
+    {% endif %}
 </div>
 </div>
 

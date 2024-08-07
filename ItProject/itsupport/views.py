@@ -30,7 +30,7 @@ def support_request(request:HttpRequest):
             is_there = False
             break
     
-    print(is_there)
+    
     if is_there:
     
         if request.user.is_authenticated:
@@ -135,20 +135,25 @@ def close_order(request:HttpRequest,request_id):
             
             request_detail.status = 'منتهي'
             request_detail.save()
-            return redirect("itsupport:request_detail_view",request_id)
+            return redirect("itsupport:done_work_view")
         
 
 
 
 def on_work_view(request:HttpRequest):
 
-    return render(request,"itsupport/on_work.html")
+    work_on =MaintenanceRequest.objects.filter(status='تحت الإجراء')
+
+    return render(request,"itsupport/on_work.html",{"work_on":work_on})
 
 
 
 def done_work_view(request:HttpRequest):
 
-    return render(request,"itsupport/done_work.html")
+    done_work =MaintenanceRequest.objects.filter(status="منتهي")
+
+
+    return render(request,"itsupport/done_work.html",{"done_works":done_work})
 
 
 

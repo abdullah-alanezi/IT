@@ -50,6 +50,7 @@
 <div class="container mt-5">
 <div class="custom-container">
     <h2 class="text-center mb-4">طلبات تحت الاجراء</h2>
+    {% if work_on.count != 0 %}
     <table class="table table-bordered table-striped table-hover custom-table">
         <thead>
             
@@ -63,28 +64,27 @@
             </tr>
         </thead>
         <tbody>
+            {% for p in work_on %}
+            
             <tr>
-                <td>إبراهيم حمد</td>
-                <td>iialjassar@gmail.com</td>
-                <td>صيانة</td>    
-                <td>2024-07-29</td>
+                <td>{{p.user.first_name}} {{p.user.last_name}}</td>
+                <td>{{p.user.email}}</td>
+                <td>{{p.device_type}}</td>
+                <td>{{p.request_date}}</td>
                 <td>
-                    <a href="#" class="btn btn-success btn-sm btn-view-details">عرض التفاصيل</a>
+                    <a href="{% url 'itsupport:request_detail_view' p.id %}" class="btn btn-success btn-sm btn-view-details">عرض التفاصيل</a>
                 </td>
               
             </tr>
-            <tr>
-                <td>سعيد عبد الله</td>
-                <td>sjjs@gmail.com</td>
-                <td>أحبار  </td>
-                <td>2024-07-30</td>
-                <td>
-                    <a href="#" class="btn btn-success btn-sm btn-view-details">عرض التفاصيل</a>
-                </td>
-             
-            </tr>
+          
+            {% endfor %}
+
         </tbody>
     </table>
+    {% else %}
+    <h3>لايوجد طلابات</h3>
+    
+    {% endif %}
 </div>
 </div>
 
