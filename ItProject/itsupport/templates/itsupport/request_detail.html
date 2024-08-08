@@ -88,6 +88,7 @@
 </head>
 <body>
 
+    {% if request_detail %}
 <div class="custom-container">
 <div class="row">
     <div class="col-12 col-md-6">
@@ -109,8 +110,8 @@
         <div class="label">البريد الإلكتروني</div>
         <div class="value mb-3">{{ request_detail.user.email }}</div>
 
-        <div class="label">الرقم الوظيفي</div>
-        <div class="value mb-3">123</div>
+        <div class="label">رقم الجهاز</div>
+        <div class="value mb-3">{{request_detail.device_id}}</div>
 
         <div class="label">تاريخ الطلب</div>
         <div class="value mb-3">{{ request_detail.request_date }}</div>
@@ -124,7 +125,7 @@
     {% if request_detail.status == "مفتوح" %}
     <button class="btn-custom" data-bs-toggle="modal" data-bs-target="#confirmReceiveModal">استلام الطلب</button>
     {% elif request_detail.status == 'تحت الإجراء' %}
-    <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmCloseModal">إغلاق الطلب</button>
+    <button class="btn btn-custom btn-danger" data-bs-toggle="modal" data-bs-target="#confirmCloseModal">إغلاق الطلب</button>
     {% endif %}
 </div>
 {% endif %}
@@ -177,6 +178,104 @@
     </div>
 </div>
 </div>
+
+
+
+{% elif prenter_detail %}
+
+
+<div class="custom-container">
+    <div class="row">
+        <div class="col-12 col-md-6">
+            <div class="label">نوع الطابعة</div>
+            <div class="value mb-3">{{ prenter_detail.printer_type }}</div>
+    
+            <div class="label">رقم الطابعة</div>
+            <div class="value mb-3">{{ prenter_detail.printer_id }}</div>
+    
+            <div class="label">الصورة</div>
+            <div class="value mb-3"><img src="{{prenter_detail.image.url}}" width="150" height="150" alt=""></div>
+            
+        </div>
+    
+        <div class="col-12 col-md-6">
+            <div class="label">اسم مقدم الطلب</div>
+            <div class="value mb-3">{{ prenter_detail.user.first_name }} {{ prenter_detail.user.last_name }}</div>
+    
+            <div class="label">البريد الإلكتروني</div>
+            <div class="value mb-3">{{ prenter_detail.user.email }}</div>
+    
+            <div class="label">رقم الحبر</div>
+            <div class="value mb-3">{{prenter_detail.ink_id}}</div>
+    
+            <div class="label">تاريخ الطلب</div>
+            <div class="value mb-3">{{ prenter_detail.request_date }}</div>
+    
+            <div class="label">الحالة</div>
+            <div class="value mb-3"><span id="status" class="status status-open">{{ prenter_detail.status }}</span></div>
+        </div>
+    </div>
+    {% if request.user.is_staff %}
+    <div class="btn-container">
+        {% if prenter_detail.status == "مفتوح" %}
+        <button class="btn-custom" data-bs-toggle="modal" data-bs-target="#confirmReceiveModal">استلام الطلب</button>
+        {% elif prenter_detail.status == 'تحت الإجراء' %}
+        <button class="btn  btn-danger" data-bs-toggle="modal" data-bs-target="#confirmCloseModal">إغلاق الطلب</button>
+        {% endif %}
+    </div>
+    {% endif %}
+    
+    <div class="response-box">
+        <div class="label">إرسال رد</div>
+        <textarea class="response-textarea" placeholder="أدخل ردك هنا..."></textarea>
+        <button class="response-button">إرسال</button>
+    </div>
+    </div>
+    
+    <!-- Modal for Closing Request -->
+    <div class="modal fade" id="confirmCloseModal" tabindex="-1" aria-labelledby="confirmCloseModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmCloseModalLabel">تأكيد إغلاق الطلب</h5>
+            </div>
+            <div class="modal-body">
+                هل أنت متأكد من إغلاق الطلب؟
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">لا</button>
+                <form action="{% url 'itsupport:close_order' prenter_detail.id  %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary">نعم</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
+    
+    <!-- Modal for Receiving Request -->
+    <div class="modal fade" id="confirmReceiveModal" tabindex="-1" aria-labelledby="confirmReceiveModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmReceiveModalLabel">تأكيد استلام الطلب</h5>
+            </div>
+            <div class="modal-body">
+                هل أنت متأكد من استلام الطلب؟
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">لا</button>
+                <form action="{% url 'itsupport:request_detail_view' prenter_detail.id  %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary">نعم</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
+
+
+{% endif %}
 
 
 

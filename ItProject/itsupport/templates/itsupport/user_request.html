@@ -131,7 +131,7 @@
                                 
                                 <td>{{ ink_request.request_date }}</td>
                                 <td>
-                                    <a href="#" class="btn btn-success btn-sm">عرض التفاصيل</a>
+                                    <a href="{% url 'itsupport:request_detail_view' ink_request.id %}" class="btn btn-success btn-sm">عرض التفاصيل</a>
                                 </td>
                                 <td><span class="badge badge-status badge-open"> {{ ink_request.status }}</span></td>
                             </tr>
@@ -144,7 +144,7 @@
                                 <td>{{ink_request.ink_id}}</td>
                                 <td>{{ ink_request.request_date }}</td>
                                 <td>
-                                    <a href="#" class="btn btn-success btn-sm">عرض التفاصيل</a>
+                                    <a href="{% url 'itsupport:request_detail_view' ink_request.id %}" class="btn btn-success btn-sm">عرض التفاصيل</a>
                                 </td>
                                 <td><span class="badge badge-status badge-in-progress"> {{ ink_request.status }}</span></td>
                             </tr>
@@ -157,7 +157,7 @@
                                 <td>{{ink_request.ink_id}}</td>
                                 <td>{{ ink_request.request_date }}</td>
                                 <td>
-                                    <a href="#" class="btn btn-success btn-sm">عرض التفاصيل</a>
+                                <a href="{% url 'itsupport:request_detail_view' ink_request.id %}" class="btn btn-success btn-sm">عرض التفاصيل</a>
                                 </td>
                                 <td><span class="badge badge-status badge-closed">{{ ink_request.status }}</span></td>
                             </tr>

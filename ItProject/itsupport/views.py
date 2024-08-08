@@ -72,10 +72,12 @@ def user_request_view(request:HttpRequest):
 def my_order(request:HttpRequest):
     user = User.objects.get(id=request.user.id)
     my_order = MaintenanceRequest.objects.filter(user=user)
+
+    printer_order = PrinterRequest.objects.filter(user=user)
     
     
 
-    return render(request,"itsupport/my_order.html",{"my_order":my_order})
+    return render(request,"itsupport/my_order.html",{"my_order":my_order,"printer_order":printer_order})
 
 
 
@@ -87,9 +89,11 @@ def add_printer_request(request:HttpRequest):
                 user=request.user,
                 printer_type=request.POST["printer_type"],
                 printer_id=request.POST["printer_id"],
-                image = request.FILES["image"],
+                
                 ink_id = request.POST["ink_id"]
                 )
+            if "image" in request.FILES:
+                user_request.image = request.FILES["image"]
             user_request.save()
             return redirect("itsupport:my_order")
     else:
@@ -99,32 +103,50 @@ def add_printer_request(request:HttpRequest):
 
     
 def request_detail_view(request:HttpRequest,request_id):
+    request_detail =None
+    prenter_detail = None
+    try:
 
-    request_detail = MaintenanceRequest.objects.get(id=request_id)
+        request_detail = MaintenanceRequest.objects.get(id=request_id)
+    except:
+            prenter_detail = PrinterRequest.objects.get(id=request_id)
     if request.user.is_staff:
 
-        
-        user_email=request_detail.user.email
+        try:
+            user_email=request_detail.user.email
+        except:
+                user_email=prenter_detail.user.email
         if request.method == "POST":
             
             recipient_email = user_email
-            print(request_detail.user.email)
+           
 
             send_order_status_email(recipient_email)
-            
-            request_detail.status = "تحت الإجراء"
-            request_detail.save()
+            try:
+                request_detail.status = "تحت الإجراء"
+                request_detail.save()
+            except:
+                    prenter_detail.status = "تحت الإجراء"
+                    prenter_detail.save()
+
             return redirect("itsupport:request_detail_view",request_id)
             
 
 
-    return render(request,"itsupport/request_detail.html",{"request_detail":request_detail})
+    return render(request,"itsupport/request_detail.html",{"request_detail":request_detail,"prenter_detail":prenter_detail})
 
 
 
 def close_order(request:HttpRequest,request_id):
+    request_detail =None
+    prenter_detail = None
 
-    request_detail = MaintenanceRequest.objects.get(id=request_id)
+    try:
+
+        request_detail = MaintenanceRequest.objects.get(id=request_id)
+    except:
+        prenter_detail = PrinterRequest.objects.get(id=request_id)
+
 
     if request.user.is_staff:
 
@@ -133,8 +155,12 @@ def close_order(request:HttpRequest,request_id):
         if request.method == "POST":
             
             
-            request_detail.status = 'منتهي'
-            request_detail.save()
+            try:
+                request_detail.status = 'منتهي'
+                request_detail.save()
+            except:
+                prenter_detail.status = 'منتهي'
+                prenter_detail.save()
             return redirect("itsupport:done_work_view")
         
 
