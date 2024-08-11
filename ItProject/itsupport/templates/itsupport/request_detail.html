@@ -14,6 +14,9 @@
 <div class="custom-container">
 <div class="row">
     <div class="col-12 col-md-6">
+        
+        <div class="label">مستلم الطلب</div>
+        <div class="value mb-3">{{emp.it_employee.first_name}}</div>
         <div class="label">نوع الطلب</div>
         <div class="value mb-3">{{ request_detail.device_type }}</div>
 
@@ -26,6 +29,7 @@
     </div>
 
     <div class="col-12 col-md-6">
+        
         <div class="label">اسم مقدم الطلب</div>
         <div class="value mb-3">{{ request_detail.user.first_name }} {{ request_detail.user.last_name }}</div>
 
@@ -52,12 +56,61 @@
 </div>
 {% endif %}
 
-<div class="response-box">
-    <div class="label">إرسال رد</div>
-    <textarea class="response-textarea" placeholder="أدخل ردك هنا..."></textarea>
-    <button class="response-button">إرسال</button>
+
 </div>
+{% if request_detail.status == 'تحت الإجراء' %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    غرفة الشات
+                </div>
+                <div class="card-body" style="height: 400px; overflow-y: auto;">
+                    <!-- الرسائل -->
+                     <div class="row">
+                        <div class="col-6" >
+                            {% for chat in it_chat %}
+                            <div class="d-flex justify-content-start mb-3">
+                                <div class="p-3 bg-light rounded border">
+                                    <small class="text-muted">{{ chat.user.first_name }}:</small>
+                                    <p class="mb-0">{{ chat.content }}</p>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="col-6" >
+                            {% for chat in user_chat %}
+                            <div class="d-flex justify-content-end mb-3">
+                                <div class="p-3 bg-primary text-white rounded border">
+                                    <small class="text-muted">{{ chat.user.first_name }}:</small>
+                                    <p class="mb-0">{{ chat.content }}</p>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        
+
+                     </div>
+
+                </div>
+                <div class="card-footer">
+                    <form action="{% url 'itsupport:chating' request_detail.id %}" method="post">
+                        {% csrf_token %}
+                        <div class="input-group">
+                            <input type="text" name="content" class="form-control" placeholder="اكتب رسالتك..." required>
+                            <button class="btn btn-primary" type="submit">إرسال</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+{% endif %}
+
 
 <!-- Modal for Closing Request -->
 <div class="modal fade" id="confirmCloseModal" tabindex="-1" aria-labelledby="confirmCloseModalLabel" aria-hidden="true">
@@ -109,6 +162,8 @@
 <div class="custom-container">
     <div class="row">
         <div class="col-12 col-md-6">
+            <div class="label">مستلم الطلب</div>
+            <div class="value mb-3">{{emp.it_employee.first_name}}</div>
             <div class="label">نوع الطابعة</div>
             <div class="value mb-3">{{ prenter_detail.printer_type }}</div>
     
@@ -147,12 +202,59 @@
     </div>
     {% endif %}
     
-    <div class="response-box">
-        <div class="label">إرسال رد</div>
-        <textarea class="response-textarea" placeholder="أدخل ردك هنا..."></textarea>
-        <button class="response-button">إرسال</button>
+
     </div>
+    {% if prenter_detail.status == 'تحت الإجراء' %}
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        غرفة الشات
+                    </div>
+                    <div class="card-body" style="height: 400px; overflow-y: auto;">
+                        <!-- الرسائل -->
+                         <div class="row">
+                            <div class="col-6" >
+                                {% for chat in it_chat %}
+                                <div class="d-flex justify-content-start mb-3">
+                                    <div class="p-3 bg-light rounded border">
+                                        <small class="text-muted">{{ chat.user.first_name }}:</small>
+                                        <p class="mb-0">{{ chat.content }}</p>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+    
+                            <div class="col-6" >
+                                {% for chat in user_chat %}
+                                <div class="d-flex justify-content-end mb-3">
+                                    <div class="p-3 bg-primary text-white rounded border">
+                                        <small class="text-muted">{{ chat.user.first_name }}:</small>
+                                        <p class="mb-0">{{ chat.content }}</p>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                            
+    
+                         </div>
+    
+                    </div>
+                    <div class="card-footer">
+                        <form action="{% url 'itsupport:chating' prenter_detail.id %}" method="post">
+                            {% csrf_token %}
+                            <div class="input-group">
+                                <input type="text" name="content" class="form-control" placeholder="اكتب رسالتك..." required>
+                                <button class="btn btn-primary" type="submit">إرسال</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+    {% endif %}
     
     <!-- Modal for Closing Request -->
     <div class="modal fade" id="confirmCloseModal" tabindex="-1" aria-labelledby="confirmCloseModalLabel" aria-hidden="true">
@@ -198,6 +300,9 @@
 
 
 {% endif %}
+
+
+
 
 
 

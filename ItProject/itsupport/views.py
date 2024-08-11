@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 
 from django.http import HttpRequest
 
-from .models import MaintenanceRequest,PrinterRequest
+from .models import MaintenanceRequest,PrinterRequest,ItHelp,PrinterHelp,Chat
 from django.core.mail import send_mail
 from django.conf import settings
 from django.contrib.auth.models import User
@@ -103,13 +103,33 @@ def add_printer_request(request:HttpRequest):
 
     
 def request_detail_view(request:HttpRequest,request_id):
+
+    it_chat=None
+    user_chat=None
     request_detail =None
     prenter_detail = None
+    it_emp =None
     try:
 
-        request_detail = MaintenanceRequest.objects.get(id=request_id)
+            request_detail = MaintenanceRequest.objects.get(id=request_id)
+            request_detail.user
+            user_chat = Chat.objects.filter(user=request_detail.user)
+            try:
+
+                emp = ItHelp.objects.get(user_request=request_detail)
+                it_chat = Chat.objects.filter(user=emp.it_employee)
+            except:
+                emp=None
     except:
             prenter_detail = PrinterRequest.objects.get(id=request_id)
+            user_chat = Chat.objects.filter(user=prenter_detail.user)
+            
+            try:
+
+                emp = PrinterHelp.objects.get(user_request_p=prenter_detail)
+                it_chat = Chat.objects.filter(user=emp.it_employee)
+            except:
+                    emp=None
     if request.user.is_staff:
 
         try:
@@ -119,7 +139,13 @@ def request_detail_view(request:HttpRequest,request_id):
         if request.method == "POST":
             
             recipient_email = user_email
-           
+            try:
+                it_emp = ItHelp(it_employee=request.user,user_request=request_detail)
+                it_emp.save()
+            except:
+                    it_emp = PrinterHelp(it_employee=request.user,user_request_p=prenter_detail)
+                    it_emp.save()
+                
 
             send_order_status_email(recipient_email)
             try:
@@ -133,7 +159,7 @@ def request_detail_view(request:HttpRequest,request_id):
             
 
 
-    return render(request,"itsupport/request_detail.html",{"request_detail":request_detail,"prenter_detail":prenter_detail})
+    return render(request,"itsupport/request_detail.html",{"request_detail":request_detail,"prenter_detail":prenter_detail,"emp":emp,"user_chat":user_chat,"it_chat":it_chat})
 
 
 
@@ -161,6 +187,9 @@ def close_order(request:HttpRequest,request_id):
             except:
                 prenter_detail.status = 'منتهي'
                 prenter_detail.save()
+            
+            chat=Chat.objects.all()
+            chat.delete()
             return redirect("itsupport:done_work_view")
         
 
@@ -181,6 +210,39 @@ def done_work_view(request:HttpRequest):
 
     return render(request,"itsupport/done_work.html",{"done_works":done_work})
 
+
+
+
+def chating(request:HttpRequest,request_id):
+    chat = None
+    user_request=None
+    it_employee =None
+    try:
+        user_request = MaintenanceRequest.objects.get(id=request_id)
+        it = ItHelp.objects.get(user_request=user_request) 
+        it_employee = it.it_employee
+    except:
+         user_request = PrinterRequest.objects.get(id=request_id)
+         it = PrinterHelp.objects.get(user_request_p=user_request) 
+         it_employee = it.it_employee
+        
+
+
+    user_req = user_request.user
+    if request.user.is_authenticated:
+        if request.method =="POST":
+             if request.user == user_req:
+                chat=Chat(user=user_req,content=request.POST["content"])
+                chat.save()
+             else:
+                chat=Chat(user=it_employee,content=request.POST["content"])
+                chat.save()
+             
+
+        return redirect("itsupport:request_detail_view",request_id)
+
+
+     
 
 
 

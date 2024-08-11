@@ -57,3 +57,23 @@ class ItHelp(models.Model):
     
     user_request = models.ForeignKey(MaintenanceRequest,on_delete=models.CASCADE)
 
+    #user_request_p = models.ForeignKey(PrinterRequest,on_delete=models.CASCADE)
+
+
+
+class PrinterHelp(models.Model):
+
+    it_employee = models.ForeignKey(User,on_delete=models.CASCADE)
+    
+
+    user_request_p = models.ForeignKey(PrinterRequest,on_delete=models.CASCADE)
+
+
+
+
+
+class Chat(models.Model):
+    
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+
+    content = models.TextField()
