@@ -1,0 +1,66 @@
+{% extends "main/base.html" %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header text-center">
+                    <h4>إضافة مستخدم جديد</h4>
+                </div>
+                {% if msg %}
+                <div class="alert alert-danger" role="alert">
+                    {{msg}}
+                  </div> 
+                  {% endif %}   
+                <div class="card-body">
+                    <form action="{% url 'user:add_user_view' %}" method="post">
+                        {% csrf_token %}
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="username" class="form-label">اسم المستخدم</label>
+                                <input type="text" name="username" class="form-control" id="username" placeholder="أدخل اسم المستخدم" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="email" class="form-label">البريد الإلكتروني</label>
+                                <input type="email" name="email" class="form-control" id="email" placeholder="أدخل البريد الإلكتروني" required>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="first_name" class="form-label">الاسم الأول</label>
+                                <input type="text" name="first_name" class="form-control" id="first_name" placeholder="أدخل الاسم الأول" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="last_name" class="form-label">الاسم الأخير</label>
+                                <input type="text" name="last_name" class="form-control" id="last_name" placeholder="أدخل الاسم الأخير" required>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="password" class="form-label">كلمة المرور</label>
+                                <input type="password" name="password" class="form-control" id="password" placeholder="أدخل كلمة المرور" required>
+                            </div>
+                            <div class="col-md-6 d-flex align-items-end">
+                                <div class="form-check">
+                                    <input type="checkbox" name="is_staff" class="form-check-input" id="is_staff">
+                                    <label class="form-check-label" for="is_staff">إضافة كموظف دعم فني</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <button type="submit" class="btn btn-success btn-lg w-100">إضافة مستخدم</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

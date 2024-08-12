@@ -188,7 +188,7 @@ def close_order(request:HttpRequest,request_id):
                 prenter_detail.status = 'منتهي'
                 prenter_detail.save()
             
-            chat=Chat.objects.all()
+            chat=Chat.objects.get(user=request.user)
             chat.delete()
             return redirect("itsupport:done_work_view")
         
